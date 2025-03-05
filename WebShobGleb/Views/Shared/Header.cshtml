@@ -1,0 +1,19 @@
+﻿﻿<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3 button_color" style="background-color: #464646!important">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Дом</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index"><h5 class="text-white" style="font-family : initial">Каталог</h5></a>
+            <a class="navbar-brand" asp-area="Admin" asp-controller="Order" asp-action="Orders"><h5 class="text-white font-weight-light">Админка</h5></a>
+            <a class="navbar-brand" asp-area="" asp-controller="login" asp-action="index"><h5 class="text-white font-weight-light">Войти</h5></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-row-reverse">
+                <nav class="nav justify-content-center">
+                    @await Component.InvokeAsync("Cart")
+                </nav>
+            </div>
+        </div>
+    </nav>
+</header>

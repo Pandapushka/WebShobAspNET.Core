@@ -1,0 +1,47 @@
+﻿@using WebShobGleb.Areas.Admin.Models
+@model List<Role>
+@{
+	int i = 1;
+}
+<div class="row">
+	<div class="col-3">
+		@await Html.PartialAsync("AdminLeftMenu")
+	</div>
+	<div class="col-9">
+		<a class="btn btn-outline-warning" asp-controller="Role" asp-action="addRole"><i class="bi bi-database-add"> Добавить новую роль </i></a>
+
+		@if (Model == null || Model.Count == 0)
+		{
+			<h3 class="text-center">Роли еще не назначены!</h3>
+		}
+		else
+		{
+			<h3 class="text-center">Список ролей</h3>
+			<br />
+			<div class="row">
+				<div class="col">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>№</th>
+								<th>Название</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td> @i</td>
+									<td class="col-3"><p>@item.Name</p></td>
+									<td class="col-2"><a asp-area="Admin" asp-controller="Role" asp-action="removeRole" asp-route-roleId=@item.Id>Удалить</a></td>
+								</tr>
+								i++;
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		}
+	</div>
+</div>

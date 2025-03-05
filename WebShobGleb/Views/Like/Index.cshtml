@@ -1,0 +1,28 @@
+﻿@model UserLikeProducts
+
+@if (Model == null)
+{
+    <h1>Вы не отметили товары</h1>
+}
+else
+{
+    <table class="table ">
+        <thead>
+            <tr>
+                <th scope="col">Название позиции</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        <a class="btn btn-outline-dark" href="#" role="button">-</a>
+                    </td>
+                    <td>@product.Cost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

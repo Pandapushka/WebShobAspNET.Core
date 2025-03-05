@@ -1,0 +1,22 @@
+﻿@using OnlineShopDB.Models
+@model Product
+
+@if (Model == null)
+{
+	<div>Такого товара нет!</div>
+}
+else
+{
+	<div class="row">
+		<div class="col-6 card">
+			<img class="card-img-top" src="@Model.Image">
+			<div class="card-body">
+				<h5>@Model.Name</h5>
+				<h5>@Model.Cost</h5>
+				<h5>@Model.Description</h5>
+				<a class="btn btn-outline-dark" href="#" role="button">Добавить в корзину</a>
+				<a class="btn btn-outline-dark" href="/home/index" role="button">Продолжить покупки</a>
+			</div>
+		</div>
+	</div>
+}

@@ -1,0 +1,20 @@
+﻿@model int
+
+@if (Model > 0)
+{
+	<a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+		<div class="btn btn-warning">
+			<i class="bi bi-cart">
+				@Model
+			</i>
+		</div>
+	</a>
+}
+else
+{
+	<a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+		<div class="btn btn-warning">
+			<i class="bi bi-cart"></i>
+		</div>
+	</a>
+}

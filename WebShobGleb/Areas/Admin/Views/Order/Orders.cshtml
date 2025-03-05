@@ -1,0 +1,46 @@
+﻿@using WebShobGleb.Halpers
+@using WebShobGleb.Models
+@model List<Order>
+@{
+    int i = 1;
+}
+<div class="row">
+    <div class="col-3">
+        @await Html.PartialAsync("AdminLeftMenu")
+    </div>
+    <div class="col-9">
+        <h3 class="text-center">Список заказов</h3>
+        <br />
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Суммa</th>
+                            <th>Статус</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td> @i</td>
+                                <td class="col-3"><p>@item.Cost</p></td>
+                                <td>@EnumHelper.GetDisplayName(item.Status)</td>
+                                <td class="col-2">@item.CreateDataTime.ToString("d")</td>
+                                <td class="col-2">@item.CreateDataTime.ToString("t")</td>
+                                <td class="col-2"><a asp-area="Admin" asp-controller="Order" asp-action="OrderDetails" asp-route-orderId=@item.Id>Подробнее</a></td>
+
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
