@@ -1,9 +1,10 @@
-﻿@model ProductEdit
+﻿@model ProductVM
 
 <form method="post">
     <h4>Добавление товара</h4>
     <br />
-    <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+    <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
+    <input type="hidden" asp-for="Image" value="https://i.pinimg.com/736x/e5/ca/d2/e5cad2ec2eca38258096fe2caf0d8e28.jpg" />
     <div class="row">
         <label asp-for="Name" class="col-sm-2 col-form-label">название товара:</label>
         <div class="col-sm-8">

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopDB.Models;
 using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
@@ -17,7 +18,8 @@ namespace WebShobGleb.Areas.Admin.Controllers
         public IActionResult Products()
         {
             var products = _productsRepository.GetAll();
-            return View(products);
+            var productsVM = ProductMapper.MapToProductVMList(products);
+            return View(productsVM);
         }
         public IActionResult Delete(int id)
         {
@@ -27,18 +29,20 @@ namespace WebShobGleb.Areas.Admin.Controllers
         public IActionResult Edit(int id)
         {
             var product = _productsRepository.GetProduct(id);
-            return View(product);
+            var productVM = ProductMapper.MapToProductVM(product);
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(ProductEdit productEdit, int id)
+        public IActionResult Edit(ProductVM productEdit, int id)
         {
             if (!ModelState.IsValid)
             {
                 var product = _productsRepository.GetProduct(id);
-                return View(product);
+                var productVM = ProductMapper.MapToProductVM(product);
+                return View(productVM);
             }
-            var productE = ProductMapper.ToProduct(productEdit);
+            var productE = ProductMapper.MapToProduct(productEdit);
             _productsRepository.Edit(productE, id);
             return RedirectToAction("Products", "Product");
         }
@@ -48,13 +52,13 @@ namespace WebShobGleb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(ProductEdit newProduct)
+        public IActionResult Add(ProductVM newProduct)
         {
             if (!ModelState.IsValid)
             {
                 return View(newProduct);
             }
-            var product = ProductMapper.ToProduct(newProduct);
+            var product = ProductMapper.MapToProduct(newProduct);
             _productsRepository.Add(product);
             return RedirectToAction("Products", "Product");
         }

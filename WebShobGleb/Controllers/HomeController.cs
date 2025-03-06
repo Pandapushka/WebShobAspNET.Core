@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopDB.Repository;
+using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
 
@@ -18,7 +19,8 @@ namespace WebShobGleb.Controllers
         public IActionResult Index()
         {
             var products = _productsRepository.GetAll();
-            return View(products);
+            var productsVM = ProductMapper.MapToProductVMList(products);
+            return View(productsVM);
         }
 
         public IActionResult Privacy()

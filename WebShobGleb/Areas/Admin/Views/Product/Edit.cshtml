@@ -1,10 +1,10 @@
-﻿@using OnlineShopDB.Models
-@model Product
+﻿@model ProductVM
 
 <form method="post">
     <h4>Редактирование товара</h4>
     <br />
     <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" asp-for="Image" />
     <div class="row">
         <label asp-for="Name" class="col-sm-2 col-form-label">название товара:</label>
         <div class="col-sm-8">
