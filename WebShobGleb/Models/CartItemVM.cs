@@ -2,9 +2,9 @@
 
 namespace WebShobGleb.Models
 {
-    public class CartItem
+    public class CartItemVM
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
         public Product Product { get; set; }
         public int Amount { get; set; }
         public decimal Cost
@@ -14,7 +14,7 @@ namespace WebShobGleb.Models
                 return Amount * Product.Cost;
             }
         }
-        public CartItem()
+        public CartItemVM()
         {
             Id = Guid.NewGuid();
         }

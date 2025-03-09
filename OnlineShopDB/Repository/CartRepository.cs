@@ -1,25 +1,26 @@
-﻿using OnlineShopDB.Repository;
-using WebShobGleb.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShopDB.Models;
 
-namespace WebShobGleb.Repository
+namespace OnlineShopDB.Repository
 {
-    public  class CartRepository : ICartRepository
+    public class CartRepository : ICartRepository
     {
         private readonly IProductsRepository _productsRepository;
-        public  List<Cart> carts = new List<Cart>();
+        private readonly DataBaseContext _databaseContext;
 
-        public CartRepository(IProductsRepository productsRepository)
+        public CartRepository(DataBaseContext databaseContext, IProductsRepository productsRepository)
         {
+            _databaseContext = databaseContext;
             _productsRepository = productsRepository;
         }
 
-        public  Cart TryGetByUserId(string userId)
+        public Cart TryGetByUserId(string userId)
         {
-            var cart = carts.FirstOrDefault(cart => cart.UserId == userId);
+            var cart = _databaseContext.Carts.Include(x => x.Items).ThenInclude(el => el.Product).FirstOrDefault(cart => cart.UserId == userId);
             return cart;
         }
 
-        public  void Add(int productId, string userId)
+        public void Add(int productId, string userId)
         {
             var product = _productsRepository.GetProduct(productId);
             var existingCart = TryGetByUserId(userId);
@@ -38,7 +39,7 @@ namespace WebShobGleb.Repository
                         newCartItem
                     }
                 };
-                carts.Add(newCart);
+                _databaseContext.Carts.Add(newCart);
             }
             else
             {
@@ -52,6 +53,8 @@ namespace WebShobGleb.Repository
                     existingCart.Items.Add(newCartItem);
                 }
             }
+            _databaseContext.SaveChanges();
+
         }
         public void Del(int productId, string userId)
         {
@@ -62,12 +65,18 @@ namespace WebShobGleb.Repository
             if (existingCartItem.Amount == 0)
                 existingCart.Items.Remove(existingCartItem);
             if (existingCart.Items.Count == 0)
-                carts.Remove(existingCart);
+                _databaseContext.Carts.Remove(existingCart);
+            _databaseContext.SaveChanges();
         }
         public void Clear(string userId)
         {
-            var existingCart = TryGetByUserId(userId);
-            carts.Remove(existingCart);
+            var сart = TryGetByUserId(userId);
+            if (сart != null)
+            {
+                _databaseContext.CartItems.RemoveRange(_databaseContext.CartItems.Where(i => i.Cart.Id == сart.Id));
+                _databaseContext.Carts.Remove(сart);
+                _databaseContext.SaveChanges();
+            }
         }
     }
 }

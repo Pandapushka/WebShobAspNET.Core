@@ -1,5 +1,4 @@
-﻿@using WebShobGleb.Models.DTO
-@model CartAndOrderData
+﻿@model OrderVM
 
 <div class="row">
     @*форма заказа*@
@@ -38,7 +37,7 @@
     
     <div class="col-6 card shadow-lg">
         <form method="post">
-            <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+            <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
 
             <input type="hidden" asp-for="UserId" />
             <input type="hidden" asp-for="Items" />

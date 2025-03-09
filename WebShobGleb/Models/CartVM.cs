@@ -2,11 +2,11 @@
 
 namespace WebShobGleb.Models
 {
-    public class Cart
+    public class CartVM
     {
-        public Guid Id { get; }
+        public Guid Id { get; set; }
         public string UserId { get; set; }
-        public List<CartItem> Items { get; set; }
+        public List<CartItemVM> Items { get; set; }
 
         public int Amount
         {
@@ -23,7 +23,7 @@ namespace WebShobGleb.Models
                 return Items.Sum(x => x.Cost);
             }
         }
-        public Cart()
+        public CartVM()
         {
             Id = Guid.NewGuid();
             UserId = Constants.UserId;

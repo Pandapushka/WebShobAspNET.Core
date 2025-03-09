@@ -31,8 +31,8 @@
                                 <td> @i</td>
                                 <td class="col-3"><p>@item.Cost</p></td>
                                 <td>@EnumHelper.GetDisplayName(item.Status)</td>
-                                <td class="col-2">@item.CreateDataTime.ToString("d")</td>
-                                <td class="col-2">@item.CreateDataTime.ToString("t")</td>
+                                <td class="col-2">@item.CreateDateTime.ToString("d")</td>
+                                <td class="col-2">@item.CreateDateTime.ToString("t")</td>
                                 <td class="col-2"><a asp-area="Admin" asp-controller="Order" asp-action="OrderDetails" asp-route-orderId=@item.Id>Подробнее</a></td>
 
                             </tr>

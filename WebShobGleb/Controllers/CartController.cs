@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineShopDB.Repository;
 using WebShobGleb.Const;
+using WebShobGleb.Mappers;
 using WebShobGleb.Repository;
 
 namespace WebShobGleb.Controllers
@@ -14,7 +16,7 @@ namespace WebShobGleb.Controllers
         public IActionResult Index()
         {
             var cart = _cartRepository.TryGetByUserId(Constants.UserId);
-            return View(cart);
+            return View(CartMapper.MappingToCartVM(cart));
         }
         public IActionResult Add(int Id)
         {
