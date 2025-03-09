@@ -9,12 +9,12 @@ namespace WebShobGleb.Mappers
         {
             var orderVM = new OrderVM();
             orderVM.UserId = cart.UserId;
-            orderVM.Items = cart?.Items.Select(item => new CartItemVM
+            orderVM.Items = cart?.Items.Select(item => new OrderItemVM
             {
                 Id = item.Id,
                 Product = item.Product,
                 Amount = item.Amount
-            }).ToList() ?? new List<CartItemVM>();
+            }).ToList() ?? new List<OrderItemVM>();
 
             return orderVM;
         }
@@ -26,7 +26,7 @@ namespace WebShobGleb.Mappers
             }
 
             orderVM.UserId = cart.UserId;
-            orderVM.Items = cart.Items.Select(item => new CartItemVM
+            orderVM.Items = cart.Items.Select(item => new OrderItemVM
             {
                 Id = item.Id,
                 Product = item.Product,
@@ -59,6 +59,31 @@ namespace WebShobGleb.Mappers
             }).ToList();
 
             return order;
+        }
+
+        public static OrderVM MapOrderToOrderVM(Order order)
+        {
+            return new OrderVM
+            {
+                Name = order.Name,
+                Email = order.Email,
+                Phone = order.Phone,
+                Address = order.Address,
+                Status = order.Status,
+                CreateDataTime = order.CreateDateTime,
+                Items = order.OrderItems.Select(item => new OrderItemVM
+                {
+                    Id = item.Id,
+                    Product = item.Product,
+                    Amount = item.Amount,
+
+                }).ToList()
+            };
+        }
+
+        public static List<OrderVM> MapOrdersToOrderVMs(List<Order> orders)
+        {
+            return orders.Select(MapOrderToOrderVM).ToList();
         }
     }
 }

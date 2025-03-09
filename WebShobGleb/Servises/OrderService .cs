@@ -26,7 +26,7 @@ namespace WebShobGleb.Servises
         public OrderVM RebuildOrderVM(OrderVM orderVM, string userId)
         {
             var cart = _cartsRepository.TryGetByUserId(userId);
-            orderVM.Items = cart.Items.Select(item => new CartItemVM
+            orderVM.Items = cart.Items.Select(item => new OrderItemVM
             {
                 Id = item.Id,
                 Product = item.Product,
