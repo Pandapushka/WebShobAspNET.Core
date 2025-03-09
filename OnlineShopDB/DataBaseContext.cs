@@ -15,6 +15,7 @@ namespace OnlineShopDB
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
@@ -25,6 +26,11 @@ namespace OnlineShopDB
             modelBuilder.Entity<Product>()
                 .Property(p => p.Cost)
                 .HasColumnType("decimal(18, 2)"); // Указываем точность (18) и масштаб (2)
+
+            //modelBuilder.Entity<Order>()
+            //    .HasOne(o => o.Cart)
+            //    .WithMany()
+            //    .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

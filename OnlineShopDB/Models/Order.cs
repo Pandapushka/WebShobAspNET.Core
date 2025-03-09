@@ -9,7 +9,7 @@ namespace WebShobGleb.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-        public Cart Cart { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
         public OrderStatus Status { get; set; }
         public DateTime CreateDateTime { get; set; }
         public decimal Cost { get; set; }

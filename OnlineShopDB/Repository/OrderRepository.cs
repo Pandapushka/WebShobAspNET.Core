@@ -11,24 +11,24 @@ namespace WebShobGleb.Repository
         {
             _dataBaseContext = dataBaseContext;               
         }
-        //public void Add(Order order)
-        //{
-        //    _dataBaseContext.Orders.Add(order);
-        //    _dataBaseContext.SaveChanges();
-        //}
         public void Add(Order order)
         {
-            try
-            {
-                _dataBaseContext.Orders.Add(order);
-                _dataBaseContext.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                Console.WriteLine($"Ошибка при сохранении заказа: {ex.InnerException?.Message}");
-                throw;
-            }
+            _dataBaseContext.Orders.Add(order);
+            _dataBaseContext.SaveChanges();
         }
+        //public void Add(Order order)
+        //{
+        //    try
+        //    {
+        //        _dataBaseContext.Orders.Add(order);
+        //        _dataBaseContext.SaveChanges();
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        Console.WriteLine($"Ошибка при сохранении заказа: {ex.InnerException?.Message}");
+        //        throw;
+        //    }
+        //}
         public List<Order> GetAll()
         {
             return _dataBaseContext.Orders.ToList();

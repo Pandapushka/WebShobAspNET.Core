@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShopDB;
 using OnlineShopDB.Repository;
 using WebShobGleb.Repository;
+using WebShobGleb.Servises;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("online_shop")));
 
 
-// Add services to the container.
+// Добавление репозиториев
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<ICartRepository, CartRepository>();
 builder.Services.AddTransient<IProductsRepository, ProductRepository>();
@@ -18,6 +19,10 @@ builder.Services.AddTransient<ILikeRepository, LikeRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IRolesRepository ,RolesRepository>();
 builder.Services.AddTransient<IUserManager, UserManager>();
+
+// Добавление сервисов
+builder.Services.AddTransient<IOrderService, OrderService>();
+
 
 
 
