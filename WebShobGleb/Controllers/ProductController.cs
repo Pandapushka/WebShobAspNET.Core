@@ -3,21 +3,21 @@ using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
+using WebShobGleb.Servises;
 
 namespace WebShobGleb.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductsRepository _productsRepository;
+        private readonly IProductService _productService;
 
-        public ProductController(IProductsRepository productsRepository)
+        public ProductController(IProductService productService)
         {
-            _productsRepository = productsRepository;
+            _productService = productService;
         }
         public IActionResult Index(int id)
         {
-            var product = _productsRepository.GetProduct(id);
-            var productVM = ProductMapper.MapToProductVM(product);
+            var productVM = _productService.GetProductById(id);
             return View(productVM);
         } 
     }

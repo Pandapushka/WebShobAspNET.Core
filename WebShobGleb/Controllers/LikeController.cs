@@ -1,25 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShopDB.Repository;
 using WebShobGleb.Const;
-using WebShobGleb.Repository;
+using WebShobGleb.Mappers;
+using WebShobGleb.Servises;
 
 namespace WebShobGleb.Controllers
 {
     public class LikeController : Controller
     {
-        private readonly ILikeRepository _likeRepository;
-        public LikeController(ILikeRepository likeRepository)
+        private readonly ILikeService _likeService;
+        public LikeController(ILikeService likeService)
         {
-            _likeRepository = likeRepository;
+            _likeService = likeService;
         }
         public IActionResult Index()
         {
-            var likeProducts = _likeRepository.TryGetByUserId(Constants.UserId);
+            var likeProducts = _likeService.GetUserLikeProducts(Constants.UserId);
             return View(likeProducts);
         }
         public IActionResult Add(int Id)
         {
-            _likeRepository.Add(Id, Constants.UserId);
+            _likeService.AddLike(Id, Constants.UserId);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int Id)
+        {
+            _likeService.DeleteLike(Id, Constants.UserId);
             return RedirectToAction("Index");
         }
     }

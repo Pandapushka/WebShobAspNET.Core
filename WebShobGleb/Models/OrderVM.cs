@@ -4,7 +4,7 @@ using WebShobGleb.Models;
 
 public class OrderVM
 {
-    public Guid Id { get; }
+    public Guid Id { get; set; }
     [Required(ErrorMessage = "Поле ФИО должно быть заполнено")]
     [StringLength(70, MinimumLength = 3, ErrorMessage = "Имя должно содержать от 3 до 70 символов")]
     public string Name { get; set; }
@@ -40,7 +40,6 @@ public class OrderVM
 
     public OrderVM()
     {
-        Id = Guid.NewGuid();
         Items = new List<OrderItemVM>(); // Инициализация пустым списком
     }
 }

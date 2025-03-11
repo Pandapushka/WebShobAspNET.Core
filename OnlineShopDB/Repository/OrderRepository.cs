@@ -16,26 +16,18 @@ namespace WebShobGleb.Repository
             _dataBaseContext.Orders.Add(order);
             _dataBaseContext.SaveChanges();
         }
-        //public void Add(Order order)
-        //{
-        //    try
-        //    {
-        //        _dataBaseContext.Orders.Add(order);
-        //        _dataBaseContext.SaveChanges();
-        //    }
-        //    catch (DbUpdateException ex)
-        //    {
-        //        Console.WriteLine($"Ошибка при сохранении заказа: {ex.InnerException?.Message}");
-        //        throw;
-        //    }
-        //}
+        
         public List<Order> GetAll()
         {
-            return _dataBaseContext.Orders.ToList();
+            return _dataBaseContext.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                    .OrderByDescending(o => o.CreateDateTime)
+                    .ToList();
         }
         public Order TryGetById(Guid orderId)
         {
-            return _dataBaseContext.Orders.FirstOrDefault(x => x.Id == orderId);
+            return _dataBaseContext.Orders.Include(o => o.OrderItems).ThenInclude(oi => oi.Product).FirstOrDefault(x => x.Id == orderId);
         }
 
         public void UpdateStatus(Guid orderId, OrderStatus orderStatus)

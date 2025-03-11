@@ -22,7 +22,10 @@ builder.Services.AddTransient<IUserManager, UserManager>();
 
 // Добавление сервисов
 builder.Services.AddTransient<IOrderService, OrderService>();
-
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ILikeService, LikeService>();
+builder.Services.AddTransient<ICartService, CartService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
 
 
 

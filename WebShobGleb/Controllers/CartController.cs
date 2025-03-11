@@ -2,35 +2,34 @@
 using OnlineShopDB.Repository;
 using WebShobGleb.Const;
 using WebShobGleb.Mappers;
-using WebShobGleb.Repository;
+using WebShobGleb.Servises;
 
 namespace WebShobGleb.Controllers
 {
     public class CartController : Controller
     {
-        private readonly ICartRepository _cartRepository;
-        public CartController(ICartRepository cartRepository)
+        private readonly ICartService _cartService;
+        public CartController(ICartService cartService)
         {
-            _cartRepository = cartRepository;
+            _cartService = cartService;
         }
         public IActionResult Index()
         {
-            var cart = _cartRepository.TryGetByUserId(Constants.UserId);
-            return View(CartMapper.MappingToCartVM(cart));
+            return View(_cartService.GetCart(Constants.UserId));
         }
         public IActionResult Add(int Id)
         {
-            _cartRepository.Add(Id, Constants.UserId);
+            _cartService.AddProductToCart(Id, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int Id)
         {
-            _cartRepository.Del(Id, Constants.UserId);
+            _cartService.RemoveProductFromCart(Id, Constants.UserId);
             return RedirectToAction("Index");
         }
         public IActionResult Clear()
         {
-            _cartRepository.Clear(Constants.UserId);
+            _cartService.ClearCart(Constants.UserId);
             return RedirectToAction("Index");
         }
     }

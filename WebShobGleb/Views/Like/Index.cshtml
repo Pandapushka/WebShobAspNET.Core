@@ -1,28 +1,75 @@
-﻿@model UserLikeProducts
+﻿@model UserLikeProductsVM
 
-@if (Model == null)
+@if (Model == null || !Model.Products.Any())
 {
-    <h1>Вы не отметили товары</h1>
+    <div class="text-center py-5">
+        <h1 class="display-4">Вы не отметили товары</h1>
+        <p class="lead text-muted">Добавьте товары в список избранного, чтобы они отображались здесь.</p>
+    </div>
 }
 else
 {
-    <table class="table ">
-        <thead>
-            <tr>
-                <th scope="col">Название позиции</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="container py-5">
+        <h1 class="text-center mb-5 display-4">Избранные товары</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach (var product in Model.Products)
             {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>
-                        <a class="btn btn-outline-dark" href="#" role="button">-</a>
-                    </td>
-                    <td>@product.Cost</td>
-                </tr>
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <!-- Изображение продукта с эффектом наведения -->
+                        <div class="card-img-top overflow-hidden position-relative" style="height: 300px;">
+                            <img src="@product.Image"
+                                 class="img-fluid w-100 h-100"
+                                 alt="@product.Name"
+                                 style="object-fit: cover; transition: transform 0.3s;"
+                                 data-bs-toggle="modal"
+                                 data-bs-target="#imageModal-@product.Id"
+                                 onmouseover="this.style.transform='scale(1.1)'"
+                                 onmouseout="this.style.transform='scale(1)'">
+                            <div class="position-absolute top-0 end-0 p-2">
+                                <a class="btn btn-danger btn-sm" asp-controller="Like" asp-action="Delete" asp-route-id="@product.Id">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <!-- Название продукта -->
+                            <h5 class="card-title fw-bold">@product.Name</h5>
+
+                            <!-- Описание продукта -->
+                            <p class="card-text text-muted">@product.Description</p>
+
+                            <!-- Цена продукта -->
+                            <p class="card-text">
+                                <strong>Цена:</strong> <span class="text-success fw-bold">@product.Cost.ToString("C2")</span>
+                            </p>
+
+                            <!-- Кнопка "Добавить в корзину" -->
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-dark btn-block">
+                                    <i class="fas fa-shopping-cart me-2"></i>Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Модальное окно для изображения -->
+                <div class="modal fade" id="imageModal-@product.Id" tabindex="-1" aria-labelledby="imageModalLabel-@product.Id" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="imageModalLabel-@product.Id">@product.Name</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="@product.Image" class="img-fluid" alt="@product.Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
+        </div>
+    </div>
 }

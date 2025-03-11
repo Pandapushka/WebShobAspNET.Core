@@ -4,32 +4,35 @@ using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
+using WebShobGleb.Servises;
 
 namespace WebShobGleb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ProductController : Controller
     {
-        private readonly IProductsRepository _productsRepository;
-        public ProductController(IProductsRepository productsRepository)
+        private readonly IProductService _productService;
+
+        public ProductController(IProductService productService)
         {
-            _productsRepository = productsRepository;
+            _productService = productService;
         }
+
         public IActionResult Products()
         {
-            var products = _productsRepository.GetAll();
-            var productsVM = ProductMapper.MapToProductVMList(products);
+            var productsVM = _productService.GetAllProducts();
             return View(productsVM);
         }
+
         public IActionResult Delete(int id)
         {
-            _productsRepository.Delete(id);
+            _productService.DeleteProduct(id);
             return RedirectToAction("Products", "Product");
         }
+
         public IActionResult Edit(int id)
         {
-            var product = _productsRepository.GetProduct(id);
-            var productVM = ProductMapper.MapToProductVM(product);
+            var productVM = _productService.GetProductById(id);
             return View(productVM);
         }
 
@@ -38,14 +41,14 @@ namespace WebShobGleb.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var product = _productsRepository.GetProduct(id);
-                var productVM = ProductMapper.MapToProductVM(product);
+                var productVM = _productService.GetProductById(id);
                 return View(productVM);
             }
-            var productE = ProductMapper.MapToProduct(productEdit);
-            _productsRepository.Edit(productE, id);
+
+            _productService.UpdateProduct(productEdit, id);
             return RedirectToAction("Products", "Product");
         }
+
         public IActionResult Add()
         {
             return View();
@@ -58,8 +61,8 @@ namespace WebShobGleb.Areas.Admin.Controllers
             {
                 return View(newProduct);
             }
-            var product = ProductMapper.MapToProduct(newProduct);
-            _productsRepository.Add(product);
+
+            _productService.AddProduct(newProduct);
             return RedirectToAction("Products", "Product");
         }
     }

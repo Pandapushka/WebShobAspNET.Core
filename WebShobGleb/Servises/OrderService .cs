@@ -15,14 +15,22 @@ namespace WebShobGleb.Servises
             _cartsRepository = cartsRepository;
             _ordersRepository = ordersRepository;
         }
+        public OrderVM TryGetById(Guid orderId)
+        { 
+            var order = _ordersRepository.TryGetById(orderId);
+            return OrderMapper.MapOrderToOrderVM(order);
+        }
+
+        public List<OrderVM> GetAll()
+        {
+            return OrderMapper.MapOrdersToOrderVMs(_ordersRepository.GetAll());
+        }
 
         public OrderVM GetOrderVMForUser(string userId)
         {
-            var cart = _cartsRepository.TryGetByUserId(userId);
-            return OrderMapper.MapCartToOrderVM(cart);
+            return OrderMapper.MapCartToOrderVM(_cartsRepository.TryGetByUserId(userId));
         }
 
-        // так как если валидация не проходит модель возвращается пустой, метод нужен для обновления списка товаров в модели
         public OrderVM RebuildOrderVM(OrderVM orderVM, string userId)
         {
             var cart = _cartsRepository.TryGetByUserId(userId);
@@ -37,9 +45,14 @@ namespace WebShobGleb.Servises
 
         public void CreateOrder(OrderVM orderVM, string userId)
         {
+            orderVM = RebuildOrderVM(orderVM, userId);
             var order = OrderMapper.OrderForDb(orderVM, _cartsRepository.TryGetByUserId(userId));
             _ordersRepository.Add(order);
             _cartsRepository.Clear(userId);
+        }
+        public void UpdateStatus(Guid orderId, OrderStatus orderStatus)
+        {
+            _ordersRepository.UpdateStatus(orderId, orderStatus);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using WebShobGleb.Areas.Admin.Models;
+﻿using OnlineShopDB.Models;
 
-namespace WebShobGleb.Repository
+namespace OnlineShopDB.Repository
 {
     public interface IRolesRepository
     {

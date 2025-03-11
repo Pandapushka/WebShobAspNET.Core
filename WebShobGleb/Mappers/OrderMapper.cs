@@ -65,6 +65,7 @@ namespace WebShobGleb.Mappers
         {
             return new OrderVM
             {
+                Id = order.Id,
                 Name = order.Name,
                 Email = order.Email,
                 Phone = order.Phone,

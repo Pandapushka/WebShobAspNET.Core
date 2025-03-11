@@ -1,10 +1,10 @@
 ﻿@using WebShobGleb.Areas.Admin.Models
-@model Role
+@model RoleVM
 
 <form method="post">
     <h4>Создание новой роли</h4>
     <br />
-    <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+    <div class="text-danger font-weight-bold" asp-validation-summary="All"></div>
     <div class="row">
         <label asp-for="Name" class="col-sm-2 col-form-label">название роли:</label>
         <div class="col-sm-8">

@@ -16,6 +16,8 @@ namespace OnlineShopDB
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<UserLikeProducts> UserLikeProducts { get; set; }
+        public DbSet<Role> Roles { get; set; }
         
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {

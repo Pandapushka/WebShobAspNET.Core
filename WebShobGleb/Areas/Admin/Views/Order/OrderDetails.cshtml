@@ -3,43 +3,84 @@
 @model OrderVM
 
 <form method="post">
-	<div class="row">
-		<div class="col-6">
-			<table class="table">
-				<tr>
-					<td>Дата и время</td>
-					<td>@Model.CreateDataTime.ToString("g")</td>
-				</tr>
-				<tr>
-					<td>Адрес доставки</td>
-					<td>@Model.Address</td>
-				</tr>
-				<tr>
-					<td>Получатель</td>
-					<td>@Model.Name</td>
-				</tr>
-				<tr>
-					<td>Телефон</td>
-					<td>@Model.Phone</td>
-				</tr>
-				<tr>
-					<td>Сумма заказа</td>
-					<td>@Model.Cost</td>
-				</tr>
-				<tr>
-					<td>Статус заказа</td>
-					<td>
-						<select asp-for="@Model.Status"
-								asp-items="@Html.GetEnumSelectList<OrderStatus>()"
-								class="form-control " name="orderStatus">
-						</select>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<br />
-	<button class="btn btn-success" type="submit" asp-area="Admin" asp-controller="Order" asp-action="UpdateOrderStatus" asp-route-orderId="@Model.Id">
-		Сохранить изменения
-	</button>
+    <div class="row">
+        <div class="col-6">
+            <h3>Информация о заказе</h3>
+            <table class="table">
+                <tr>
+                    <td>Дата и время</td>
+                    <td>@Model.CreateDataTime.ToString("g")</td>
+                </tr>
+                <tr>
+                    <td>Адрес доставки</td>
+                    <td>@Model.Address</td>
+                </tr>
+                <tr>
+                    <td>Получатель</td>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <td>Телефон</td>
+                    <td>@Model.Phone</td>
+                </tr>
+                <tr>
+                    <td>Сумма заказа</td>
+                    <td>@Model.Cost.ToString("C2")</td> <!-- Форматирование валюты -->
+                </tr>
+                <tr>
+                    <td>Статус заказа</td>
+                    <td>
+                        <select asp-for="@Model.Status"
+                                asp-items="@Html.GetEnumSelectList<OrderStatus>()"
+                                class="form-control" name="orderStatus">
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+    <h3>Товары в заказе</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Изображение</th> <!-- Новая колонка для изображений -->
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>
+                        <!-- Отображение изображения продукта -->
+                        <img src="@item.Product.Image" alt="@item.Product.Name" style="max-width: 100px;" />
+                    </td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.Description</td>
+                    <td>@item.Product.Cost.ToString("C2")</td> <!-- Форматирование валюты -->
+                    <td>@item.Amount</td>
+                    <td>@item.Cost.ToString("C2")</td> <!-- Форматирование валюты -->
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-end"><strong>Итого:</strong></td>
+                <td><strong>@Model.Cost.ToString("C2")</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <br />
+
+    <button class="btn btn-success" type="submit" asp-area="Admin" asp-controller="Order" asp-action="UpdateOrderStatus" asp-route-orderId="@Model.Id">
+        Сохранить изменения
+    </button>
 </form>
