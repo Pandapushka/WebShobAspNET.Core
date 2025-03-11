@@ -48,7 +48,8 @@ namespace WebShobGleb.Servises
             orderVM = RebuildOrderVM(orderVM, userId);
             var order = OrderMapper.OrderForDb(orderVM, _cartsRepository.TryGetByUserId(userId));
             _ordersRepository.Add(order);
-            _cartsRepository.Clear(userId);
+            var cart = _cartsRepository.TryGetByUserId(userId);
+            _cartsRepository.RemoveCart(cart);
         }
         public void UpdateStatus(Guid orderId, OrderStatus orderStatus)
         {

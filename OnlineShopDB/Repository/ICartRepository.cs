@@ -5,8 +5,9 @@ namespace OnlineShopDB.Repository
     public interface ICartRepository
     {
         Cart TryGetByUserId(string userId);
-        void Add(int productId, string userId);
-        void Del(int productId, string userId);
-        void Clear(string userId);
+        void AddCart(Cart cart);
+        void UpdateCart(Cart cart);
+        void RemoveCart(Cart cart);
+        void RemoveCartItem(CartItem cartItem);
     }
 }
