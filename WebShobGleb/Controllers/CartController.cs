@@ -1,35 +1,50 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using OnlineShopDB.Models;
 using OnlineShopDB.Repository;
-using WebShobGleb.Const;
 using WebShobGleb.Mappers;
 using WebShobGleb.Servises;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebShobGleb.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
-        public CartController(ICartService cartService)
+        private readonly UserManager<User> _userManager;
+
+        public CartController(ICartService cartService, UserManager<User> userManager)
         {
             _cartService = cartService;
+            _userManager = userManager;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View(_cartService.GetCart(Constants.UserId));
+            var userId = _userManager.GetUserId(User); // Получаем Id текущего пользователя
+            return View(_cartService.GetCart(userId));
         }
-        public IActionResult Add(int Id)
+
+        public async Task<IActionResult> Add(int id)
         {
-            _cartService.AddProductToCart(Id, Constants.UserId);
+            var userId = _userManager.GetUserId(User);
+            _cartService.AddProductToCart(id, userId);
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int Id)
+
+        public async Task<IActionResult> Delete(int id)
         {
-            _cartService.RemoveProductFromCart(Id, Constants.UserId);
+            var userId = _userManager.GetUserId(User);
+            _cartService.RemoveProductFromCart(id, userId);
             return RedirectToAction("Index");
         }
-        public IActionResult Clear()
+
+        public async Task<IActionResult> Clear()
         {
-            _cartService.ClearCart(Constants.UserId);
+            var userId = _userManager.GetUserId(User);
+            _cartService.ClearCart(userId);
             return RedirectToAction("Index");
         }
     }

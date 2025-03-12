@@ -20,3 +20,96 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Основные стили */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+/* Навигация */
+.navbar {
+    background-color: #262626 !important;
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+}
+
+    .nav-link:hover {
+        color: #00ff88 !important;
+    }
+
+/* Карточки товаров */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 255, 136, 0.2);
+    }
+
+.btn-outline-light {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+
+    .btn-outline-light:hover {
+        background-color: #00ff88;
+        color: #000000;
+    }
+
+/* Футер */
+footer {
+    background-color: #262626;
+    color: #ffffff;
+}
+
+footer a {
+    color: #00ff88;
+}
+
+ footer a:hover {
+    color: #00cc66;
+}
+
+/* Анимация для кнопки корзины */
+.btn-outline-light:hover {
+    background-color: #00ff88;
+    border-color: #00ff88;
+    color: #000000;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Анимация для иконки корзины */
+.fa-shopping-cart {
+    transition: transform 0.3s ease;
+}
+
+.btn-outline-light:hover .fa-shopping-cart {
+    transform: scale(1.2); /* Увеличиваем иконку при наведении */
+}
+
+/* Стили для карточек товаров */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 255, 136, 0.2);
+    }
+
+/* Стили для кнопок */
+.btn-outline-light {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+
+    .btn-outline-light:hover {
+        background-color: #00ff88;
+        color: #000000;
+    }
+

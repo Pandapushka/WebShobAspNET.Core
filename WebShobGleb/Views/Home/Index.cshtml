@@ -1,19 +1,24 @@
 ﻿@model List<ProductVM>
 
-<div class="row">
+<div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var prod in Model)
     {
-        <div class="col-6 card shadow-lg">
-            <img class="card-img-top" src="@prod.Image" width="50" height="150">
-            <div class="card-body">
-                <a style="color:black" href="/product/index/@prod.Id">
-                    <h5>@prod.Name</h5>
-                </a>
-                <h5>@prod.Cost</h5>
-                <a class="btn btn-outline-dark" href="/cart/add/@prod.Id" role="button">Добавить в корзину</a>
-                <a class="btn btn-outline-dark" href="/like/add/@prod.Id" role="button">Мне нравится</a>
+        <div class="col">
+            <div class="card h-100 bg-dark text-light border-secondary">
+                <img src="@prod.Image" class="card-img-top" alt="@prod.Name" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@prod.Name</h5>
+                    <p class="card-text">@prod.Cost.ToString("C")</p>
+                    <div class="d-grid gap-2">
+                        <a href="/cart/add/@prod.Id" class="btn btn-outline-light">
+                            <i class="fas fa-cart-plus"></i> Добавить в корзину
+                        </a>
+                        <a href="/like/add/@prod.Id" class="btn btn-outline-light">
+                            <i class="fas fa-heart"></i> Мне нравится
+                        </a>
+                    </div>
+                </div>
             </div>
-
         </div>
     }
 </div>

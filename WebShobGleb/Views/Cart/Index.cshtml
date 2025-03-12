@@ -1,42 +1,49 @@
 ﻿@model CartVM
 
 
-@if (Model == null)
+@if (Model == null || Model.Items.Count == 0)
 {
-    <h1>В корзине нет товаров</h1>
+    <div class="text-center py-5">
+        <h1 class="text-light">В корзине нет товаров</h1>
+        <a class="btn btn-outline-light mt-3" href="/home/index">Вернуться к покупкам</a>
+    </div>
 }
 else
 {
-    <table class="table ">
-        <thead>
-            <tr>
-                <th scope="col">Название позиции</th>
-                <th scope="col">Количество товара в позиции</th>
-                <th scope="col">Стоимость позиции</th>
-                <th scope="col">Общая стоимость</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="container">
+        <div class="row">
             @foreach (var product in Model.Items)
             {
-                <tr>
-                    <td>@product.Product.Name</td>
-                    <td>
-                        @product.Amount
-                        <a class="btn btn-outline-dark" href="/cart/add/@product.Product.Id" role="button">+</a>
-                        <a class="btn btn-outline-dark" href="/cart/Delete/@product.Product.Id" role="button">-</a>
-                    </td>
-                    <td>@product.Product.Cost</td>
-                    <td>@product.Cost</td>
-                </tr>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 bg-dark text-light border-secondary">
+                        <img src="@product.Product.Image" class="card-img-top" alt="@product.Product.Name" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Product.Name</h5>
+                            <p class="card-text">Цена: @product.Product.Cost.ToString("C")</p>
+                            <p class="card-text">Количество: @product.Amount</p>
+                            <p class="card-text">Стоимость: @product.Cost.ToString("C")</p>
+                            <div class="d-flex gap-2">
+                                <a class="btn btn-outline-light" href="/cart/add/@product.Product.Id" role="button">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                                <a class="btn btn-outline-light" href="/cart/Delete/@product.Product.Id" role="button">
+                                    <i class="fas fa-minus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
-    <div class="text-end">
-        <figure class="text-end"><h4>Итоговая сумма: @Model.Cost руб.</h4></figure>
-        <a class="btn btn-dark text-uppercase" href="/order/index">Оформить заказ</a>
-        <a class="btn btn-dark text-uppercase" href="/home/index">Продолжить покупки</a>
-        <a class="btn btn-dark text-uppercase" href="/cart/clear">Очистить корзину</a>
+        </div>
+
+        <div class="text-end mt-4">
+            <h4 class="text-light">Итоговая сумма: @Model.Cost.ToString("C")</h4>
+            <div class="d-flex gap-2 justify-content-end">
+                <a class="btn btn-outline-light text-uppercase" href="/order/index">Оформить заказ</a>
+                <a class="btn btn-outline-light text-uppercase" href="/home/index">Продолжить покупки</a>
+                <a class="btn btn-outline-light text-uppercase" href="/cart/clear">Очистить корзину</a>
+            </div>
+        </div>
     </div>
 }
 

@@ -4,83 +4,97 @@
 
 <form method="post">
     <div class="row">
-        <div class="col-6">
-            <h3>Информация о заказе</h3>
-            <table class="table">
-                <tr>
-                    <td>Дата и время</td>
-                    <td>@Model.CreateDataTime.ToString("g")</td>
-                </tr>
-                <tr>
-                    <td>Адрес доставки</td>
-                    <td>@Model.Address</td>
-                </tr>
-                <tr>
-                    <td>Получатель</td>
-                    <td>@Model.Name</td>
-                </tr>
-                <tr>
-                    <td>Телефон</td>
-                    <td>@Model.Phone</td>
-                </tr>
-                <tr>
-                    <td>Сумма заказа</td>
-                    <td>@Model.Cost.ToString("C2")</td> <!-- Форматирование валюты -->
-                </tr>
-                <tr>
-                    <td>Статус заказа</td>
-                    <td>
-                        <select asp-for="@Model.Status"
-                                asp-items="@Html.GetEnumSelectList<OrderStatus>()"
-                                class="form-control" name="orderStatus">
-                        </select>
-                    </td>
-                </tr>
-            </table>
+        <!-- Информация о заказе -->
+        <div class="col-lg-6 col-md-12 mb-4">
+            <div class="card bg-dark text-light border-secondary shadow-lg">
+                <div class="card-body">
+                    <h3 class="card-title">Информация о заказе</h3>
+                    <table class="table table-dark table-borderless">
+                        <tr>
+                            <td>Дата и время</td>
+                            <td>@Model.CreateDataTime.ToString("g")</td>
+                        </tr>
+                        <tr>
+                            <td>Адрес доставки</td>
+                            <td>@Model.Address</td>
+                        </tr>
+                        <tr>
+                            <td>Получатель</td>
+                            <td>@Model.Name</td>
+                        </tr>
+                        <tr>
+                            <td>Телефон</td>
+                            <td>@Model.Phone</td>
+                        </tr>
+                        <tr>
+                            <td>Сумма заказа</td>
+                            <td>@Model.Cost.ToString("C2")</td>
+                        </tr>
+                        <tr>
+                            <td>Статус заказа</td>
+                            <td>
+                                <select asp-for="@Model.Status"
+                                        asp-items="@Html.GetEnumSelectList<OrderStatus>()"
+                                        class="form-control bg-dark text-light" name="orderStatus">
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <br />
 
-    <h3>Товары в заказе</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Изображение</th> <!-- Новая колонка для изображений -->
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Стоимость</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Items)
-            {
-                <tr>
-                    <td>
-                        <!-- Отображение изображения продукта -->
-                        <img src="@item.Product.Image" alt="@item.Product.Name" style="max-width: 100px;" />
-                    </td>
-                    <td>@item.Product.Name</td>
-                    <td>@item.Product.Description</td>
-                    <td>@item.Product.Cost.ToString("C2")</td> <!-- Форматирование валюты -->
-                    <td>@item.Amount</td>
-                    <td>@item.Cost.ToString("C2")</td> <!-- Форматирование валюты -->
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5" class="text-end"><strong>Итого:</strong></td>
-                <td><strong>@Model.Cost.ToString("C2")</strong></td>
-            </tr>
-        </tfoot>
-    </table>
+    <!-- Товары в заказе -->
+    <div class="card bg-dark text-light border-secondary shadow-lg">
+        <div class="card-body">
+            <h3 class="card-title">Товары в заказе</h3>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-borderless">
+                    <thead>
+                        <tr>
+                            <th>Изображение</th>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Стоимость</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@item.Product.Image" alt="@item.Product.Name" class="img-fluid" style="max-width: 100px;" />
+                                </td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Description</td>
+                                <td>@item.Product.Cost.ToString("C2")</td>
+                                <td>@item.Amount</td>
+                                <td>@item.Cost.ToString("C2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-end"><strong>Итого:</strong></td>
+                            <td><strong>@Model.Cost.ToString("C2")</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <br />
 
-    <button class="btn btn-success" type="submit" asp-area="Admin" asp-controller="Order" asp-action="UpdateOrderStatus" asp-route-orderId="@Model.Id">
-        Сохранить изменения
-    </button>
+    <!-- Кнопка сохранения изменений -->
+    <div class="text-end">
+        <button class="btn btn-outline-success btn-lg" type="submit" asp-area="Admin" asp-controller="Order" asp-action="UpdateOrderStatus" asp-route-orderId="@Model.Id">
+            <i class="fas fa-save me-2"></i>Сохранить изменения
+        </button>
+    </div>
 </form>

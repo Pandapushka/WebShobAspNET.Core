@@ -1,20 +1,14 @@
 ﻿@model int
 
-@if (Model > 0)
-{
-	<a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
-		<div class="btn btn-warning">
-			<i class="bi bi-cart">
-				@Model
-			</i>
-		</div>
-	</a>
-}
-else
-{
-	<a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
-		<div class="btn btn-warning">
-			<i class="bi bi-cart"></i>
-		</div>
-	</a>
-}
+<a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index">
+    <div class="btn btn-outline-light position-relative">
+        <i class="fas fa-shopping-cart"></i> <!-- Иконка корзины -->
+        @if (Model > 0)
+        {
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                @Model
+                <span class="visually-hidden">товаров в корзине</span>
+            </span>
+        }
+    </div>
+</a>

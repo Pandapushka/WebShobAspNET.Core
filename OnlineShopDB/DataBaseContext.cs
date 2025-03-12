@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShopDB.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebShobGleb.Models;
 
 namespace OnlineShopDB
@@ -21,7 +16,7 @@ namespace OnlineShopDB
         
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
-             Database.EnsureCreated();
+             Database.Migrate();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -4,17 +4,19 @@
     int i = 1;
 }
 
-<div class="row">
+<div class="row bg-dark text-light p-4 rounded shadow-lg">
     <div class="col-3">
         @await Html.PartialAsync("AdminLeftMenu")
     </div>
     <div class="col-9">
-        <h3 class="text-center">Продукты</h3>
+        <h3 class="text-center text-success">Продукты</h3>
         <br />
-        <a class="btn btn-outline-warning" asp-area="admin" asp-controller="product" asp-action="add"><i class="bi bi-database-add"> Добавить новый продукт </i></a>
-        <div class="row">
+        <a class="btn btn-outline-light" asp-area="admin" asp-controller="product" asp-action="add">
+            <i class="fas fa-plus me-2"></i>Добавить новый продукт
+        </a>
+        <div class="row mt-3">
             <div class="col">
-                <table class="table">
+                <table class="table table-dark table-striped">
                     <thead>
                         <tr>
                             <th>№</th>
@@ -24,16 +26,23 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @foreach (var product in Model)
                         {
                             <tr>
-                                <td> @i</td>
-                                <td class="col-3"><a style="color:navy" asp-area="admin" asp-controller="product" asp-action="index" asp-route-id="@product.Id"><p>@product.Name</p></a></td>
+                                <td>@i</td>
+                                <td class="col-3">
+                                    <a class="text-decoration-none text-success" asp-area="admin" asp-controller="product" asp-action="index" asp-route-id="@product.Id">
+                                        <p>@product.Name</p>
+                                    </a>
+                                </td>
                                 <td class="col-2">@string.Format("{0:### ### ###}", product.Cost) р</td>
-                                <td class="  col-4 text-end">
-                                    <a class="btn btn-outline-warning" asp-area="admin" asp-controller="product" asp-action="edit" asp-route-id="@product.Id"><i class="bi bi-pencil"> Редактировать </i></a>
-                                    <a class="btn btn-warning" asp-area="admin" asp-controller="product" asp-action="delete" asp-route-id="@product.Id"> <i class="bi bi-trash-fill"> Удалить </i> </a>
+                                <td class="col-4 text-end">
+                                    <a class="btn btn-outline-light me-2" asp-area="admin" asp-controller="product" asp-action="edit" asp-route-id="@product.Id">
+                                        <i class="fas fa-edit me-2"></i>Редактировать
+                                    </a>
+                                    <a class="btn btn-outline-danger" asp-area="admin" asp-controller="product" asp-action="delete" asp-route-id="@product.Id">
+                                        <i class="fas fa-trash-alt me-2"></i>Удалить
+                                    </a>
                                 </td>
                             </tr>
                             i++;

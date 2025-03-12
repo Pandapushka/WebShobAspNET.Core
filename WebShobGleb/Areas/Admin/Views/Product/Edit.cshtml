@@ -1,35 +1,49 @@
 ﻿@model ProductVM
 
-<form method="post">
-    <h4>Редактирование товара</h4>
+<form method="post" class="bg-dark text-light p-4 rounded shadow-lg">
+    <h4 class="text-success">Редактирование товара</h4>
     <br />
     <div class="text-danger font-weight-bold" asp-validation-summary="ModelOnly"></div>
+
+    <!-- Скрытое поле для изображения -->
     <input type="hidden" asp-for="Image" />
-    <div class="row">
-        <label asp-for="Name" class="col-sm-2 col-form-label">название товара:</label>
+
+    <!-- Поле для названия товара -->
+    <div class="row mb-3">
+        <label asp-for="Name" class="col-sm-2 col-form-label">Название товара:</label>
         <div class="col-sm-8">
-            <input asp-for="Name" type="text" class="form-control" value="@Model.Name">
-            <span asp-validation-for="Name"></span>
+            <input asp-for="Name" type="text" class="form-control bg-dark text-light" value="@Model.Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
     </div>
-    <br />
-    <div class="row">
-        <label asp-for="Cost" class="col-sm-2 col-form-label">цена товара, руб.:</label>
+
+    <!-- Поле для цены товара -->
+    <div class="row mb-3">
+        <label asp-for="Cost" class="col-sm-2 col-form-label">Цена товара, руб.:</label>
         <div class="col-sm-8">
-            <input Asp-for="Cost" type="number" class="form-control" value="@Model.Cost">
-            <span asp-validation-for="Cost"></span>
+            <input asp-for="Cost" type="number" class="form-control bg-dark text-light" value="@Model.Cost">
+            <span asp-validation-for="Cost" class="text-danger"></span>
         </div>
     </div>
-    <br />
-    <div class="row">
-        <label asp-for="Description" class="col-sm-2 col-form-label">описание товара:</label>
+
+    <!-- Поле для описания товара -->
+    <div class="row mb-3">
+        <label asp-for="Description" class="col-sm-2 col-form-label">Описание товара:</label>
         <div class="col-sm-8">
-            <input asp-for="Description" type="text" class="form-control" value="@Model.Description">
-            <span asp-validation-for="Description"></span>
+            <input asp-for="Description" type="text" class="form-control bg-dark text-light" value="@Model.Description">
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
+
     <br />
-    <br />
-    <button type="submit" class="btn btn-primary" asp-area="admin" asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id">Сохранить</button>
-    <a class="btn btn-outline-primary" asp-area="admin" asp-controller="Admin" asp-action="Products">Отмена</a>
+
+    <!-- Кнопки -->
+    <div class="text-end">
+        <button type="submit" class="btn btn-success" asp-area="admin" asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id">
+            <i class="fas fa-save me-2"></i>Сохранить
+        </button>
+        <a class="btn btn-outline-light" asp-area="admin" asp-controller="Admin" asp-action="Products">
+            <i class="fas fa-times me-2"></i>Отмена
+        </a>
+    </div>
 </form>
