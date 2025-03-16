@@ -2,6 +2,8 @@
 using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace WebShobGleb.Servises
 {
@@ -9,16 +11,22 @@ namespace WebShobGleb.Servises
     {
         private readonly ICartRepository _cartRepository;
         private readonly IProductsRepository _productsRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CartService(ICartRepository cartRepository, IProductsRepository productsRepository)
+        public CartService(
+            ICartRepository cartRepository,
+            IProductsRepository productsRepository,
+            IHttpContextAccessor httpContextAccessor)
         {
             _cartRepository = cartRepository;
             _productsRepository = productsRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public CartVM GetCart(string userId)
         {
-            var cart = _cartRepository.TryGetByUserId(userId);
+            var tempUserId = userId ?? GetTempUserId();
+            var cart = _cartRepository.TryGetByUserId(tempUserId);
             return CartMapper.MappingToCartVM(cart);
         }
 
@@ -30,7 +38,8 @@ namespace WebShobGleb.Servises
                 throw new InvalidOperationException("Товар не найден.");
             }
 
-            var existingCart = _cartRepository.TryGetByUserId(userId);
+            var tempUserId = userId ?? GetTempUserId();
+            var existingCart = _cartRepository.TryGetByUserId(tempUserId);
             var newCartItem = new CartItem
             {
                 Amount = 1,
@@ -41,7 +50,7 @@ namespace WebShobGleb.Servises
             {
                 var newCart = new Cart
                 {
-                    UserId = userId,
+                    UserId = tempUserId,
                     Items = new List<CartItem> { newCartItem }
                 };
                 _cartRepository.AddCart(newCart);
@@ -63,7 +72,8 @@ namespace WebShobGleb.Servises
 
         public void RemoveProductFromCart(int productId, string userId)
         {
-            var existingCart = _cartRepository.TryGetByUserId(userId);
+            var tempUserId = userId ?? GetTempUserId();
+            var existingCart = _cartRepository.TryGetByUserId(tempUserId);
             if (existingCart == null)
             {
                 throw new InvalidOperationException("Корзина не найдена.");
@@ -94,10 +104,66 @@ namespace WebShobGleb.Servises
 
         public void ClearCart(string userId)
         {
-            var cart = _cartRepository.TryGetByUserId(userId);
+            var tempUserId = userId ?? GetTempUserId();
+            var cart = _cartRepository.TryGetByUserId(tempUserId);
             if (cart != null)
             {
                 _cartRepository.RemoveCart(cart);
+            }
+        }
+
+        // Получение временного идентификатора пользователя из сессии
+        private string GetTempUserId()
+        {
+            var httpContext = _httpContextAccessor.HttpContext;
+            if (httpContext == null)
+            {
+                throw new InvalidOperationException("HTTP-контекст недоступен.");
+            }
+
+            var tempUserId = httpContext.Session.GetString("TempUserId");
+            if (string.IsNullOrEmpty(tempUserId))
+            {
+                tempUserId = Guid.NewGuid().ToString();
+                httpContext.Session.SetString("TempUserId", tempUserId);
+            }
+
+            return tempUserId;
+        }
+
+        // Перенос корзины из временной в постоянную (при аутентификации)
+        public void MergeCarts(string tempUserId, string userId)
+        {
+            var tempCart = _cartRepository.TryGetByUserId(tempUserId);
+            if (tempCart == null)
+            {
+                return; // Нет временной корзины
+            }
+
+            var userCart = _cartRepository.TryGetByUserId(userId);
+            if (userCart == null)
+            {
+                // Если у пользователя нет корзины, просто переносим временную корзину
+                tempCart.UserId = userId;
+                _cartRepository.UpdateCart(tempCart);
+            }
+            else
+            {
+                // Если у пользователя уже есть корзина, объединяем товары
+                foreach (var item in tempCart.Items)
+                {
+                    var existingItem = userCart.Items.FirstOrDefault(i => i.Product.Id == item.Product.Id);
+                    if (existingItem != null)
+                    {
+                        existingItem.Amount += item.Amount;
+                    }
+                    else
+                    {
+                        userCart.Items.Add(item);
+                    }
+                }
+                _cartRepository.UpdateCart(userCart);
+                _cartRepository.RemoveCart(tempCart); // Удаляем временную корзину
             }
         }
     }

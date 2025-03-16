@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineShopDB.Models;
 using WebShobGleb.Areas.Admin.Models;
 using System.Threading.Tasks;
+using WebShobGleb.Servises;
 
 namespace WebShobGleb.Controllers
 {
@@ -10,9 +11,11 @@ namespace WebShobGleb.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ICartService _cartService;
 
-        public LoginController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public LoginController(ICartService cartService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
+            _cartService = cartService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -32,14 +35,21 @@ namespace WebShobGleb.Controllers
                 var result = await _signInManager.PasswordSignInAsync(user.Login, user.Password, user.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    // Перенаправление на returnUrl или на главную страницу
+                    var tempUserId = HttpContext.Session.GetString("TempUserId");
+                    var userId = _userManager.GetUserId(User);
+
+                    if (!string.IsNullOrEmpty(tempUserId))
+                    {
+                        _cartService.MergeCarts(tempUserId, userId);
+                        HttpContext.Session.Remove("TempUserId"); // Очищаем временный идентификатор
+                    }
+
                     return Redirect("/Home/Index");
                 }
 
                 ModelState.AddModelError(string.Empty, "Неправильный логин или пароль");
             }
 
-            // Если модель не валидна, возвращаем форму с ошибками
             return View("Index", user);
         }
 

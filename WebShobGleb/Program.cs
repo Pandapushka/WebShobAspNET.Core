@@ -20,6 +20,14 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<IdentityContext>()
     .AddDefaultTokenProviders();
 
+// Добавляем поддержку сессий
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20); // Время жизни сессии
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Настройка аутентификации и авторизации
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
@@ -38,6 +46,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // Добавление контроллеров и представлений
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
 // Регистрация репозиториев
 builder.Services.AddTransient<ICartRepository, CartRepository>();
@@ -73,6 +82,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -80,6 +90,9 @@ app.UseRouting();
 
 app.UseAuthentication(); // Добавьте UseAuthentication перед UseAuthorization
 app.UseAuthorization();
+
+// Включаем использование сессий
+app.UseSession();
 
 // Маршрут для Area
 app.MapControllerRoute(

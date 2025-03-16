@@ -8,5 +8,6 @@ namespace WebShobGleb.Servises
         void AddProductToCart(int productId, string userId);
         void RemoveProductFromCart(int productId, string userId);
         void ClearCart(string userId);
+        void MergeCarts(string tempUserId, string userId);
     }
 }

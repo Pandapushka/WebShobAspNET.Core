@@ -1,6 +1,4 @@
-﻿
-
-namespace OnlineShopDB.Models
+﻿namespace OnlineShopDB.Models
 {
     public class Product
     {

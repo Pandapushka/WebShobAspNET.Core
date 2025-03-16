@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using OnlineShopDB.Models;
-using OnlineShopDB.Repository;
-using WebShobGleb.Mappers;
 using WebShobGleb.Servises;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebShobGleb.Controllers
 {
