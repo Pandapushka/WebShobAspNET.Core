@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebShobGleb.Controllers
 {
-    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
