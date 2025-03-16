@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OnlineShopDB.Constans;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
 using WebShobGleb.Servises;
@@ -6,6 +8,7 @@ using WebShobGleb.Servises;
 namespace WebShobGleb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = Constant.AdminRoleName)]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
