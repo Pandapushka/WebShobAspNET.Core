@@ -1,4 +1,5 @@
 ﻿using Core.Entity;
+using Core.Entity.BaseEntitys;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace Core.Entity
 {
-    public class Image
+    public class Image : BaseEntity
     {
-        public Guid Id { get; set; }
         public string FileName { get; set; }
         public byte[] Data { get; set; } // Массив байтов для хранения изображения
         public string ContentType { get; set; } // MIME-тип изображения (например, image/jpeg)

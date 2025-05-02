@@ -1,9 +1,8 @@
 using System.Diagnostics;
+using Core.Repository;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
-using WebShobGleb.Repository;
 
 namespace WebShobGleb.Controllers
 {

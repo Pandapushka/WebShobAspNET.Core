@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Entity
+namespace Core.Entity.Enums
 {
     public enum OrderStatus
     {

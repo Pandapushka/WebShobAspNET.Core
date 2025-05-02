@@ -1,7 +1,7 @@
 ﻿using Core.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace OnlineShopDB.Repository
+namespace Core.Repository
 {
 
     public class CartRepository : BaseRepository<Cart>, ICartRepository

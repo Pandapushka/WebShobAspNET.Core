@@ -1,4 +1,4 @@
-﻿using OnlineShopDB.Repository;
+﻿using Core.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 

@@ -1,5 +1,5 @@
-﻿using Core.Entity;
-using OnlineShopDB.Repository;
+﻿using Core.Entity.Enums;
+using Core.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;

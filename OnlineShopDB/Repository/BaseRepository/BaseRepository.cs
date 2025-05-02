@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShopDB.Repository.BaseRepository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace OnlineShopDB.Repository
+
+namespace Core.Repository
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class
     {

@@ -2,7 +2,7 @@
 using OnlineShopDB.Repository.BaseRepository;
 using System.Collections.Generic;
 
-namespace OnlineShopDB.Repository
+namespace Core.Repository
 {
     public interface IProductsRepository : IRepository<Product>
     {

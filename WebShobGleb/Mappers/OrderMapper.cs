@@ -1,4 +1,5 @@
 ﻿using Core.Entity;
+using Core.Entity.Enums;
 using WebShobGleb.Models;
 
 namespace WebShobGleb.Mappers

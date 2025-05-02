@@ -1,8 +1,9 @@
-﻿namespace Core.Entity
+﻿using Core.Entity.BaseEntitys;
+
+namespace Core.Entity
 {
-    public class Cart
+    public class Cart : BaseEntity
     {
-        public Guid Id { get; set; }
         public string UserId { get; set; }
         public List<CartItem> Items { get; set; }
 

@@ -1,8 +1,9 @@
-﻿namespace Core.Entity
+﻿using Core.Entity.BaseEntitys;
+
+namespace Core.Entity
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Cost { get; set; }
         public string Description { get; set; }

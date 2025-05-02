@@ -1,8 +1,9 @@
-﻿namespace Core.Entity
+﻿using Core.Entity.BaseEntitys;
+
+namespace Core.Entity
 {
-    public class Role
+    public class Role : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public Role()
         {

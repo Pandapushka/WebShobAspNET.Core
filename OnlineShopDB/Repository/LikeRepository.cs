@@ -1,7 +1,8 @@
 ﻿using Core.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace OnlineShopDB.Repository
+namespace Core.Repository
+
 {
     public class LikeRepository : BaseRepository<UserLikeProducts>, ILikeRepository
     {

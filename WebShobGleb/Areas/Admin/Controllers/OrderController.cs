@@ -1,4 +1,4 @@
-﻿using Core.Entity;
+﻿using Core.Entity.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopDB.Constans;

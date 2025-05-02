@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnlineShopDB.Repository;
-using OnlineShopDB;
 using Core.Entity;
+using Core.Entity.Enums;
 
-namespace WebShobGleb.Repository
+namespace Core.Repository
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {

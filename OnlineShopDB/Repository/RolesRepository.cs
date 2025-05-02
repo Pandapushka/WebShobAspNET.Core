@@ -1,6 +1,6 @@
 ﻿using Core.Entity;
 
-namespace OnlineShopDB.Repository
+namespace Core.Repository
 {
     public class RolesRepository : BaseRepository<Role>, IRolesRepository
     {

@@ -1,4 +1,4 @@
-﻿using Core.Entity;
+﻿using Core.Entity.Enums;
 
 namespace WebShobGleb.Servises
 {

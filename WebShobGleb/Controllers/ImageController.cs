@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB;
+﻿using Core;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebShobGleb.Controllers
 {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using OnlineShopDB.Constans;
 
-namespace OnlineShopDB
+namespace Core
 {
     public class IdentityInitializer
     {

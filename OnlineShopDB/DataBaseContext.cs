@@ -1,10 +1,8 @@
 ﻿using Core.Entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Options;
 
 
-namespace OnlineShopDB
+namespace Core
 {
     public class DataBaseContext : DbContext
     {

@@ -1,7 +1,7 @@
 ﻿using Core.Entity;
 using OnlineShopDB.Repository.BaseRepository;
 
-namespace OnlineShopDB.Repository
+namespace Core.Repository
 {
     public interface IRolesRepository : IRepository<Role>
     {

@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Core.Entity;
-using OnlineShopDB.Repository;
-using OnlineShopDB;
 using WebShobGleb.Repository;
 using WebShobGleb.Servises;
-using OnlineShopDB.Repository.BaseRepository;
+using Core;
+using Core.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 

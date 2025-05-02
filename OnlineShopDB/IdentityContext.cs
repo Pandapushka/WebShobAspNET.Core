@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShopDB
+namespace Core
 {
     public class IdentityContext : IdentityDbContext<User>
     {

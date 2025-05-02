@@ -1,7 +1,8 @@
 ﻿using Core.Entity;
+using Core.Entity.Enums;
 using OnlineShopDB.Repository.BaseRepository;
 
-namespace WebShobGleb.Repository
+namespace Core.Repository
 {
     public interface IOrderRepository : IRepository<Order>
     {
