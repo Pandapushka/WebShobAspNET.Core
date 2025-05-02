@@ -1,10 +1,10 @@
-﻿using WebShobGleb.Models;
+﻿using Core.Entity;
+using OnlineShopDB.Repository.BaseRepository;
 
 namespace WebShobGleb.Repository
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IRepository<Order>
     {
-        void Add(Order order);
         List<Order> GetAll();
         Order TryGetById(Guid orderId);
         void UpdateStatus(Guid orderId, OrderStatus orderStatus);

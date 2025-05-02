@@ -15,7 +15,7 @@ namespace WebShobGleb.Controllers
         {
             _productService = productService;
         }
-        public IActionResult Index(int id)
+        public IActionResult Index(Guid id)
         {
             var productVM = _productService.GetProductById(id);
             return View(productVM);

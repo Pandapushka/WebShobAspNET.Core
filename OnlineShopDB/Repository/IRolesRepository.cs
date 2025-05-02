@@ -1,12 +1,10 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
+using OnlineShopDB.Repository.BaseRepository;
 
 namespace OnlineShopDB.Repository
 {
-    public interface IRolesRepository
+    public interface IRolesRepository : IRepository<Role>
     {
-        List<Role> GetAll();
-        Role TryGetByName(string Name);
-        void Add(Role role);
-        void Remove(Guid roleId);
+        Role TryGetByName(string name);
     }
 }

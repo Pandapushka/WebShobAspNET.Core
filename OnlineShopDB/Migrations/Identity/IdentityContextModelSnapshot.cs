@@ -8,7 +8,7 @@ using OnlineShopDB;
 
 #nullable disable
 
-namespace OnlineShopDB.Migrations.Identity
+namespace Core.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
     partial class IdentityContextModelSnapshot : ModelSnapshot

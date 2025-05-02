@@ -1,4 +1,4 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
 using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
@@ -29,9 +29,9 @@ namespace WebShobGleb.Servises
             return CartMapper.MappingToCartVM(cart);
         }
 
-        public void AddProductToCart(int productId, string userId)
+        public void AddProductToCart(Guid productId, string userId)
         {
-            var product = _productsRepository.GetProduct(productId);
+            var product = _productsRepository.GetById(productId);
             if (product == null)
             {
                 throw new InvalidOperationException("Товар не найден.");
@@ -52,7 +52,7 @@ namespace WebShobGleb.Servises
                     UserId = tempUserId,
                     Items = new List<CartItem> { newCartItem }
                 };
-                _cartRepository.AddCart(newCart);
+                _cartRepository.Add(newCart);
             }
             else
             {
@@ -65,11 +65,11 @@ namespace WebShobGleb.Servises
                 {
                     existingCart.Items.Add(newCartItem);
                 }
-                _cartRepository.UpdateCart(existingCart);
+                _cartRepository.Update(existingCart);
             }
         }
 
-        public void RemoveProductFromCart(int productId, string userId)
+        public void RemoveProductFromCart(Guid productId, string userId)
         {
             var tempUserId = userId ?? GetTempUserId();
             var existingCart = _cartRepository.TryGetByUserId(tempUserId);
@@ -93,11 +93,11 @@ namespace WebShobGleb.Servises
 
             if (existingCart.Items.Count == 0)
             {
-                _cartRepository.RemoveCart(existingCart);
+                _cartRepository.Remove(existingCart);
             }
             else
             {
-                _cartRepository.UpdateCart(existingCart);
+                _cartRepository.Update(existingCart);
             }
         }
 
@@ -107,7 +107,7 @@ namespace WebShobGleb.Servises
             var cart = _cartRepository.TryGetByUserId(tempUserId);
             if (cart != null)
             {
-                _cartRepository.RemoveCart(cart);
+                _cartRepository.Remove(cart);
             }
         }
 
@@ -144,7 +144,7 @@ namespace WebShobGleb.Servises
             {
                 // Если у пользователя нет корзины, просто переносим временную корзину
                 tempCart.UserId = userId;
-                _cartRepository.UpdateCart(tempCart);
+                _cartRepository.Update(tempCart);
             }
             else
             {
@@ -161,8 +161,8 @@ namespace WebShobGleb.Servises
                         userCart.Items.Add(item);
                     }
                 }
-                _cartRepository.UpdateCart(userCart);
-                _cartRepository.RemoveCart(tempCart); // Удаляем временную корзину
+                _cartRepository.Update(userCart);
+                _cartRepository.Remove(tempCart); // Удаляем временную корзину
             }
         }
     }

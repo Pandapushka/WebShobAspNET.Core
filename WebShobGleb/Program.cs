@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using OnlineShopDB.Models;
+using Core.Entity;
 using OnlineShopDB.Repository;
 using OnlineShopDB;
 using WebShobGleb.Repository;
 using WebShobGleb.Servises;
+using OnlineShopDB.Repository.BaseRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 // Добавление контроллеров и представлений
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+
 
 // Регистрация репозиториев
 builder.Services.AddTransient<ICartRepository, CartRepository>();

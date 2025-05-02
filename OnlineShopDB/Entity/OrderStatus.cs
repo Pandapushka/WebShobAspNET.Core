@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebShobGleb.Models
+namespace Core.Entity
 {
     public enum OrderStatus
     {

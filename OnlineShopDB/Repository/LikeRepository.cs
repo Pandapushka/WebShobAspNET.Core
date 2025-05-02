@@ -1,56 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnlineShopDB.Models;
+﻿using Core.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShopDB.Repository
 {
-    public class LikeRepository : ILikeRepository
+    public class LikeRepository : BaseRepository<UserLikeProducts>, ILikeRepository
     {
-        private readonly IProductsRepository _productsRepository;
         private readonly DataBaseContext _databaseContext;
-        public LikeRepository(IProductsRepository productsRepository, DataBaseContext databaseContext)
+
+        public LikeRepository(DataBaseContext databaseContext) : base(databaseContext)
         {
             _databaseContext = databaseContext;
-            _productsRepository = productsRepository;
         }
 
-        public UserLikeProducts TryGetByUserId(string userId)
+        public UserLikeProducts? TryGetByUserId(string userId)
         {
-            var likeProduct = _databaseContext.UserLikeProducts.Include(x => x.Products).FirstOrDefault(likeProduct => likeProduct.UserId == userId);
-            return likeProduct;
+            return _databaseContext.UserLikeProducts
+                .Include(x => x.Products)
+                .FirstOrDefault(likeProduct => likeProduct.UserId == userId);
         }
 
-        public void Add(int productId, string userId)
+        public void SaveChanges()
         {
-            var product = _productsRepository.GetProduct(productId);
-            var likeProduct = TryGetByUserId(userId);
-            if (likeProduct == null)
-            {
-                var newLikeItem = new UserLikeProducts()
-                {
-                    UserId = userId,
-                    Products = new List<Product>
-                    {
-                        product
-                    }
-                };
-                _databaseContext.UserLikeProducts.Add(newLikeItem);
-            }
-            else
-            {
-                var prod = likeProduct.Products.FirstOrDefault(x => x.Id == productId);
-                if (prod == null)
-                {
-                    likeProduct.Products.Add(product);
-                }
-            }
             _databaseContext.SaveChanges();
         }
-        public void Delete(int productId ,string userId)
-        {
-            var likeProduct = TryGetByUserId(userId);
-            likeProduct.Products.Remove(_productsRepository.GetProduct(productId));
-            _databaseContext.SaveChanges();
-        }
-
     }
 }

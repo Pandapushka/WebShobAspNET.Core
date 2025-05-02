@@ -1,6 +1,5 @@
-﻿using OnlineShopDB.Models;
-
-namespace WebShobGleb.Models
+﻿
+namespace Core.Entity
 {
     public class Order
     {

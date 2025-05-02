@@ -5,9 +5,9 @@ namespace WebShobGleb.Servises
     public interface IProductService
     {
         List<ProductVM> GetAllProducts();
-        ProductVM GetProductById(int id);
+        ProductVM GetProductById(Guid id);
         void AddProduct(ProductVM productVM);
-        void UpdateProduct(ProductVM productVM, int id);
-        void DeleteProduct(int id);
+        void UpdateProduct(ProductVM productVM, Guid id);
+        void DeleteProduct(Guid id);
     }
 }

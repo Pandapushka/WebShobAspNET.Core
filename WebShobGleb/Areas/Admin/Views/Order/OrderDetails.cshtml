@@ -1,4 +1,5 @@
-﻿@using WebShobGleb.Models
+﻿@using Core.Entity
+@using WebShobGleb.Models
 @using WebShobGleb.Halpers
 @model OrderVM
 
@@ -67,9 +68,7 @@
                         @foreach (var item in Model.Items)
                         {
                             <tr>
-                                @* <td>
-                                    <img src="@item.Product.Image" alt="@item.Product.Name" class="img-fluid" style="max-width: 100px;" />
-                                </td> *@
+                                <td><img src="/Image/GetImage/@item.Product.Id" class="card-img-top" alt="@item.Product.Name" style="height: 100px; width: 100px; object-fit: cover;"></td>
                                 <td>@item.Product.Name</td>
                                 <td>@item.Product.Description</td>
                                 <td>@item.Product.Cost.ToString("C2")</td>

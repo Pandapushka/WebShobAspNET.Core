@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Models;
+using Core.Entity;
 using WebShobGleb.Areas.Admin.Models;
 using System.Threading.Tasks;
 using WebShobGleb.Servises;

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Core.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineShopDB.Models
+namespace Core.Entity
 {
     public class Image
     {
@@ -12,7 +13,7 @@ namespace OnlineShopDB.Models
         public string FileName { get; set; }
         public byte[] Data { get; set; } // Массив байтов для хранения изображения
         public string ContentType { get; set; } // MIME-тип изображения (например, image/jpeg)
-        public int ProductId { get; set; } // Внешний ключ для связи с товаром
+        public Guid ProductId { get; set; } // Внешний ключ для связи с товаром
         public Product Product { get; set; } // Навигационное свойство
     }
 }

@@ -10,7 +10,7 @@ namespace WebShobGleb.Controllers
         {
             _databaseContext = databaseContext;
         }
-        public IActionResult GetImage(int id)
+        public IActionResult GetImage(Guid id)
         {
             var image = _databaseContext.Images.FirstOrDefault(i => i.ProductId == id);
             if (image == null)

@@ -1,4 +1,4 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
 
 namespace WebShobGleb.Models
 {

@@ -1,4 +1,4 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
 using System.ComponentModel.DataAnnotations;
 using WebShobGleb.Models;
 

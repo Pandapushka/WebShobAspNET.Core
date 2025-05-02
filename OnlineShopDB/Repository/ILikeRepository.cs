@@ -1,11 +1,11 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
+using OnlineShopDB.Repository.BaseRepository;
 
 namespace OnlineShopDB.Repository
 {
-    public interface ILikeRepository
+    public interface ILikeRepository : IRepository<UserLikeProducts>
     {
         UserLikeProducts TryGetByUserId(string userId);
-        void Add(int productId, string userId);
-        void Delete(int productId, string userId);
+        void SaveChanges();
     }
 }

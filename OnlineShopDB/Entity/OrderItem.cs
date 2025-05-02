@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Core.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebShobGleb.Models;
 
-namespace OnlineShopDB.Models
+namespace Core.Entity
 {
     public class OrderItem
     {

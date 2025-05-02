@@ -1,4 +1,4 @@
-﻿namespace OnlineShopDB.Models
+﻿namespace Core.Entity
 {
     public class Role
     {

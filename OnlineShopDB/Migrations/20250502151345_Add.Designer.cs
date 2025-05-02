@@ -9,10 +9,10 @@ using OnlineShopDB;
 
 #nullable disable
 
-namespace OnlineShopDB.Migrations
+namespace Core.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20250502122200_Add")]
+    [Migration("20250502151345_Add")]
     partial class Add
     {
         /// <inheritdoc />
@@ -52,8 +52,8 @@ namespace OnlineShopDB.Migrations
                     b.Property<Guid>("CartId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -82,8 +82,8 @@ namespace OnlineShopDB.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -104,8 +104,8 @@ namespace OnlineShopDB.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -118,11 +118,9 @@ namespace OnlineShopDB.Migrations
 
             modelBuilder.Entity("OnlineShopDB.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18, 2)");

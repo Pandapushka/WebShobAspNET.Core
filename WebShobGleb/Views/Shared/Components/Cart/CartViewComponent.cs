@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Core.Entity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Models;
 using OnlineShopDB.Repository;
-using WebShobGleb.Const;
-using WebShobGleb.Mappers;
-using WebShobGleb.Repository;
 using WebShobGleb.Servises;
 
 namespace WebShobGleb.Views.Shared.Components.Cart

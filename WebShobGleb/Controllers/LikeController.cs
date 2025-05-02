@@ -18,12 +18,12 @@ namespace WebShobGleb.Controllers
             var likeProducts = _likeService.GetUserLikeProducts(Constants.UserId);
             return View(likeProducts);
         }
-        public IActionResult Add(int Id)
+        public IActionResult Add(Guid Id)
         {
             _likeService.AddLike(Id, Constants.UserId);
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(Guid Id)
         {
             _likeService.DeleteLike(Id, Constants.UserId);
             return RedirectToAction("Index");

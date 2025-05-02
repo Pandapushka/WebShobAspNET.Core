@@ -1,4 +1,4 @@
-﻿using WebShobGleb.Models;
+﻿using Core.Entity;
 
 namespace WebShobGleb.Servises
 {

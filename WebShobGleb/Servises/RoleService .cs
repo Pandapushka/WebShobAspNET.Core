@@ -21,7 +21,7 @@ namespace WebShobGleb.Servises
 
         public void RemoveRole(Guid roleId)
         {
-            _rolesRepository.Remove(roleId);
+            _rolesRepository.Delete(roleId);
         }
 
         public void AddRole(RoleVM role)

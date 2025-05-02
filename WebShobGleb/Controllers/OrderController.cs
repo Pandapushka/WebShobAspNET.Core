@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Models;
+using Core.Entity;
 using WebShobGleb.Const;
 using WebShobGleb.Models;
 using WebShobGleb.Servises;

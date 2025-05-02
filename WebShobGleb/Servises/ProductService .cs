@@ -19,9 +19,9 @@ namespace WebShobGleb.Servises
             return ProductMapper.MapToProductVMList(products);
         }
 
-        public ProductVM GetProductById(int id)
+        public ProductVM GetProductById(Guid id)
         {
-            var product = _productsRepository.GetProduct(id);
+            var product = _productsRepository.GetById(id);
             return ProductMapper.MapToProductVM(product);
         }
 
@@ -31,13 +31,13 @@ namespace WebShobGleb.Servises
             _productsRepository.Add(product);
         }
 
-        public void UpdateProduct(ProductVM productVM, int id)
+        public void UpdateProduct(ProductVM productVM, Guid id)
         {
             var product = ProductMapper.MapToProduct(productVM);
             _productsRepository.Edit(product, id);
         }
 
-        public void DeleteProduct(int id)
+        public void DeleteProduct(Guid id)
         {
             _productsRepository.Delete(id);
         }

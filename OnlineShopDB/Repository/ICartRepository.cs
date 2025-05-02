@@ -1,13 +1,12 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
+using OnlineShopDB.Repository.BaseRepository;
 
 namespace OnlineShopDB.Repository
 {
-    public interface ICartRepository
+    public interface ICartRepository : IRepository<Cart>
     {
         Cart TryGetByUserId(string userId);
-        void AddCart(Cart cart);
-        void UpdateCart(Cart cart);
-        void RemoveCart(Cart cart);
         void RemoveCartItem(CartItem cartItem);
+        void Remove(Cart cart);
     }
 }

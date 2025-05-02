@@ -1,47 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnlineShopDB.Models;
+﻿using Core.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShopDB.Repository
 {
-    public class CartRepository : ICartRepository
+
+    public class CartRepository : BaseRepository<Cart>, ICartRepository
     {
         private readonly DataBaseContext _databaseContext;
-
         public CartRepository(DataBaseContext databaseContext)
+            : base(databaseContext)
         {
             _databaseContext = databaseContext;
         }
 
-        public Cart TryGetByUserId(string userId)
-        {
-            return _databaseContext.Carts
-                .Include(x => x.Items)
-                .ThenInclude(el => el.Product)
-                .FirstOrDefault(cart => cart.UserId == userId);
-        }
-
-        public void AddCart(Cart cart)
-        {
-            _databaseContext.Carts.Add(cart);
-            _databaseContext.SaveChanges();
-        }
-
-        public void UpdateCart(Cart cart)
-        {
-            _databaseContext.Carts.Update(cart);
-            _databaseContext.SaveChanges();
-        }
-
-        public void RemoveCart(Cart cart)
+        public void Remove(Cart cart)
         {
             _databaseContext.Carts.Remove(cart);
             _databaseContext.SaveChanges();
         }
 
+        public Cart TryGetByUserId(string userId)
+        {
+            return _context.Carts
+                .Include(x => x.Items)
+                .ThenInclude(el => el.Product)
+                .FirstOrDefault(cart => cart.UserId == userId);
+        }
+
         public void RemoveCartItem(CartItem cartItem)
         {
-            _databaseContext.CartItems.Remove(cartItem);
-            _databaseContext.SaveChanges();
+            _context.CartItems.Remove(cartItem);
+            _context.SaveChanges();
         }
     }
+
 }

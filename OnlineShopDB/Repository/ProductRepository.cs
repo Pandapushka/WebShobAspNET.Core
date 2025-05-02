@@ -1,46 +1,24 @@
-﻿using OnlineShopDB.Models;
+﻿using Core.Entity;
 
 namespace OnlineShopDB.Repository
 {
-    public class ProductRepository : IProductsRepository
+    public class ProductRepository : BaseRepository<Product>, IProductsRepository
     {
-        private readonly DataBaseContext _databaseContext;
         public ProductRepository(DataBaseContext databaseContext)
+            : base(databaseContext)
         {
-           _databaseContext = databaseContext;
         }
 
-        public List<Product> GetAll()
+        public void Edit(Product productEdit, Guid id)
         {
-            return _databaseContext.Products.ToList();
-        }
-
-        public Product GetProduct(int id)
-        {
-            return _databaseContext.Products.FirstOrDefault(product => product.Id == id);
-        }
-
-        public void Delete(int id)
-        {
-            var product = GetProduct(id);
-            _databaseContext.Products.Remove(product);
-            _databaseContext.SaveChanges();
-        }
-        public void Edit(Product productEdit, int id)
-        {
-            var product = GetProduct(id);
+            var product = GetById(id);
             if (product != null)
             {
                 product.Name = productEdit.Name;
                 product.Cost = productEdit.Cost;
                 product.Description = productEdit.Description;
+                Update(product);
             }
-            _databaseContext.SaveChanges();
-        }
-        public void Add(Product newProduct)
-        {
-            _databaseContext.Products.Add(newProduct);
-            _databaseContext.SaveChanges();            
         }
     }
 }

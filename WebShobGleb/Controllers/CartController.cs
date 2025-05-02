@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using OnlineShopDB.Models;
 using WebShobGleb.Servises;
 using System.Threading.Tasks;
+using Core.Entity;
 
 namespace WebShobGleb.Controllers
 {
@@ -19,18 +19,18 @@ namespace WebShobGleb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var userId = _userManager.GetUserId(User); // Получаем Id текущего пользователя
+            var userId = _userManager.GetUserId(User); 
             return View(_cartService.GetCart(userId));
         }
 
-        public async Task<IActionResult> Add(int id)
+        public async Task<IActionResult> Add(Guid id)
         {
             var userId = _userManager.GetUserId(User);
             _cartService.AddProductToCart(id, userId);
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var userId = _userManager.GetUserId(User);
             _cartService.RemoveProductFromCart(id, userId);

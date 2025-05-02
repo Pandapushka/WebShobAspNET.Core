@@ -5,18 +5,11 @@
     {
         <div class="col">
             <div class="card h-100 bg-dark text-light border-secondary">
-               @*  @if (prod.ImageId.HasValue)
-                { *@
-                    <img src="/Image/GetImage/@prod.Id" class="card-img-top" alt="@prod.Name" style="height: 200px; object-fit: cover;">
-                @* } *@
-                @* else
-                {
-                    <div class="card-img-top bg-secondary text-center" style="height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <span class="text-light">Нет изображения</span>
-                    </div>
-                } *@
+               
+                <img src="/Image/GetImage/@prod.Id" class="card-img-top" alt="@prod.Name" style="height: 200px; object-fit: cover;">
+               
                 <div class="card-body">
-                    <h5 class="card-title">@prod.Name</h5>
+                    <a href="/product/index/@prod.Id" class="card-title">@prod.Name</a>
                     <p class="card-text">@prod.Cost.ToString("C")</p>
                     <div class="d-grid gap-2">
                         <a href="/cart/add/@prod.Id" class="btn btn-outline-light">

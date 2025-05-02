@@ -1,42 +1,41 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OnlineShopDB.Repository;
 using OnlineShopDB;
-using WebShobGleb.Models;
+using Core.Entity;
 
 namespace WebShobGleb.Repository
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        private readonly DataBaseContext _dataBaseContext;
         public OrderRepository(DataBaseContext dataBaseContext)
+            : base(dataBaseContext)
         {
-            _dataBaseContext = dataBaseContext;               
         }
-        public void Add(Order order)
-        {
-            _dataBaseContext.Orders.Add(order);
-            _dataBaseContext.SaveChanges();
-        }
-        
+
         public List<Order> GetAll()
         {
-            return _dataBaseContext.Orders
-                    .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
-                    .OrderByDescending(o => o.CreateDateTime)
-                    .ToList();
+            return _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .OrderByDescending(o => o.CreateDateTime)
+                .ToList();
         }
+
         public Order TryGetById(Guid orderId)
         {
-            return _dataBaseContext.Orders.Include(o => o.OrderItems).ThenInclude(oi => oi.Product).FirstOrDefault(x => x.Id == orderId);
+            return _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .FirstOrDefault(x => x.Id == orderId);
         }
 
         public void UpdateStatus(Guid orderId, OrderStatus orderStatus)
         {
-            var order = TryGetById(orderId);
-            if (_dataBaseContext.Orders != null)
+            var order = GetById(orderId);
+            if (order != null)
             {
                 order.Status = orderStatus;
-                _dataBaseContext.SaveChanges();
+                Update(order);
             }
         }
     }

@@ -9,10 +9,10 @@ using OnlineShopDB;
 
 #nullable disable
 
-namespace OnlineShopDB.Migrations.Identity
+namespace Core.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20250502122219_Add")]
+    [Migration("20250502151405_Add")]
     partial class Add
     {
         /// <inheritdoc />

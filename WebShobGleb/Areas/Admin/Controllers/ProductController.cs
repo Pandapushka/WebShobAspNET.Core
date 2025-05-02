@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Models;
+using Core.Entity;
 using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
@@ -24,26 +24,26 @@ namespace WebShobGleb.Areas.Admin.Controllers
             return View(productsVM);
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Guid id)
         {
             _productService.DeleteProduct(id);
             return RedirectToAction("Products", "Product");
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Edit(Guid id)
         {
             var productVM = _productService.GetProductById(id);
             return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Edit(ProductVM productEdit, int id)
+        public IActionResult Edit(ProductVM productEdit, Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                var productVM = _productService.GetProductById(id);
-                return View(productVM);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    var productVM = _productService.GetProductById(id);
+            //    return View(productVM);
+            //}
 
             _productService.UpdateProduct(productEdit, id);
             return RedirectToAction("Products", "Product");

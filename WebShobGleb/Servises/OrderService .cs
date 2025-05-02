@@ -1,4 +1,5 @@
-﻿using OnlineShopDB.Repository;
+﻿using Core.Entity;
+using OnlineShopDB.Repository;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
@@ -49,7 +50,7 @@ namespace WebShobGleb.Servises
             var order = OrderMapper.OrderForDb(orderVM, _cartsRepository.TryGetByUserId(userId));
             _ordersRepository.Add(order);
             var cart = _cartsRepository.TryGetByUserId(userId);
-            _cartsRepository.RemoveCart(cart);
+            _cartsRepository.Remove(cart);
         }
         public void UpdateStatus(Guid orderId, OrderStatus orderStatus)
         {
