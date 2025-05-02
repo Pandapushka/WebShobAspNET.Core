@@ -5,29 +5,44 @@ namespace WebShobGleb.Mappers
 {
     public static class ProductMapper
     {
+        public static Product MapToProduct(ProductVM productVM)
+        {
+            var product = new Product(productVM.Name, productVM.Cost, productVM.Description)
+            {
+                Id = productVM.Id
+            };
+
+            if (productVM.ImageFile != null)
+            {
+                using var memoryStream = new MemoryStream();
+                productVM.ImageFile.CopyTo(memoryStream);
+                var image = new Image
+                {
+                    FileName = productVM.ImageFile.FileName,
+                    Data = memoryStream.ToArray(),
+                    ContentType = productVM.ImageFile.ContentType
+                };
+                product.Images.Add(image);
+            }
+
+            return product;
+        }
+
         public static ProductVM MapToProductVM(Product product)
         {
-            return new ProductVM(product.Name, product.Cost, product.Description, product.Image)
-                   {
-                        Id = product.Id // Устанавливаем Id отдельно, так как он не передается через конструктор
-                   };
-        }
-        public static Product MapToProduct(ProductVM product)
-        {
-            return new Product(product.Name, product.Cost, product.Description, product.Image)
+            return new ProductVM
             {
-                Id = product.Id // Устанавливаем Id отдельно, так как он не передается через конструктор
+                Id = product.Id,
+                Name = product.Name,
+                Cost = product.Cost,
+                Description = product.Description,
+                ImageId = product.Images.FirstOrDefault()?.Id // Берем ID первого изображения
             };
         }
+
         public static List<ProductVM> MapToProductVMList(List<Product> products)
         {
-            var productsVM = new List<ProductVM>();
-            foreach (var product in products)
-            {
-                var productVM = MapToProductVM(product);
-                productsVM.Add(productVM);
-            }
-            return productsVM;
+            return products.Select(MapToProductVM).ToList();
         }
     }
 }

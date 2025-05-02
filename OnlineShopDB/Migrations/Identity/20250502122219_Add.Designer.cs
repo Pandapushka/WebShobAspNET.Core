@@ -12,8 +12,8 @@ using OnlineShopDB;
 namespace OnlineShopDB.Migrations.Identity
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20250311173214_InitialUser")]
-    partial class InitialUser
+    [Migration("20250502122219_Add")]
+    partial class Add
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

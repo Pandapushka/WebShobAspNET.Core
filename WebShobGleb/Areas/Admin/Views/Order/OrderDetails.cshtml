@@ -67,9 +67,9 @@
                         @foreach (var item in Model.Items)
                         {
                             <tr>
-                                <td>
+                                @* <td>
                                     <img src="@item.Product.Image" alt="@item.Product.Name" class="img-fluid" style="max-width: 100px;" />
-                                </td>
+                                </td> *@
                                 <td>@item.Product.Name</td>
                                 <td>@item.Product.Description</td>
                                 <td>@item.Product.Cost.ToString("C2")</td>

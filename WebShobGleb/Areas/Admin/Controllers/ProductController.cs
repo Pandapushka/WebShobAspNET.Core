@@ -57,10 +57,10 @@ namespace WebShobGleb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Add(ProductVM newProduct)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(newProduct);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(newProduct);
+            //}
 
             _productService.AddProduct(newProduct);
             return RedirectToAction("Products", "Product");

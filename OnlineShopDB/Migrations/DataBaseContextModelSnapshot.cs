@@ -61,6 +61,34 @@ namespace OnlineShopDB.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("OnlineShopDB.Models.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Data")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("OnlineShopDB.Models.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -97,10 +125,6 @@ namespace OnlineShopDB.Migrations
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -159,7 +183,8 @@ namespace OnlineShopDB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18, 4)");
 
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
@@ -203,6 +228,17 @@ namespace OnlineShopDB.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("OnlineShopDB.Models.Image", b =>
+                {
+                    b.HasOne("OnlineShopDB.Models.Product", "Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("OnlineShopDB.Models.OrderItem", b =>
                 {
                     b.HasOne("WebShobGleb.Models.Order", "Order")
@@ -232,6 +268,11 @@ namespace OnlineShopDB.Migrations
             modelBuilder.Entity("OnlineShopDB.Models.Cart", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("OnlineShopDB.Models.Product", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("OnlineShopDB.Models.UserLikeProducts", b =>

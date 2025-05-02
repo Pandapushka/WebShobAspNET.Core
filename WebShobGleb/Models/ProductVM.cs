@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OnlineShopDB.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebShobGleb.Models
 {
@@ -14,17 +15,21 @@ namespace WebShobGleb.Models
             [Required(ErrorMessage = "Описание не может быть пустым!")]
             [StringLength(3000, MinimumLength = 30, ErrorMessage = "Поле долженно содержать 30 от  до 3000 символов")]
             public string Description { get; set; }
-            public string Image { get; set; }
+            public Image Image { get; set; }
+            [Required(ErrorMessage = "Изображение обязательно для загрузки!")]
+
+            public Guid? ImageId { get; set; } // ID изображения
+            public IFormFile ImageFile { get; set; }
             public ProductVM()
             {
             }
-            public ProductVM(string name, decimal cost, string description, string image)
+            public ProductVM(string name, decimal cost, string description)
             {
                     Name = name;
                     Cost = cost;
                     Description = description;
-                    Image = image;
             }
        }
+
 }
 

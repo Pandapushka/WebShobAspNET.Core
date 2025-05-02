@@ -19,12 +19,12 @@ else
                     <div class="card h-100 bg-dark text-light border-secondary">
                         <!-- Изображение продукта -->
                         <div class="card-img-top overflow-hidden position-relative" style="height: 200px;">
-                            <img src="@product.Image"
+                            @* <img src="@product.Image"
                                  class="img-fluid w-100 h-100"
                                  alt="@product.Name"
                                  style="object-fit: cover; transition: transform 0.3s;"
                                  onmouseover="this.style.transform='scale(1.1)'"
-                                 onmouseout="this.style.transform='scale(1)'">
+                                 onmouseout="this.style.transform='scale(1)'"> *@
                             <!-- Кнопка удаления из избранного -->
                             <div class="position-absolute top-0 end-0 p-2">
                                 <a class="btn btn-danger btn-sm" asp-controller="Like" asp-action="Delete" asp-route-id="@product.Id">
