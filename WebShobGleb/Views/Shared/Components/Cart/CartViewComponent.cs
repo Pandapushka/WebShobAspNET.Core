@@ -23,7 +23,7 @@ namespace WebShobGleb.Views.Shared.Components.Cart
         public IViewComponentResult Invoke()
         {
             var userId = _userManager.GetUserId((System.Security.Claims.ClaimsPrincipal)User);
-            var cart = _cartService.GetCart(userId, userId); //доделать норм
+            var cart = _cartService.GetCart(userId, userId); //доделать нормально
             var productCounts = cart?.Amount;
             return View("Cart", productCounts);
         }

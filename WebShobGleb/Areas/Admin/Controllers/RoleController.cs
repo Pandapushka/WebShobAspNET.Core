@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Repository;
+﻿using Application.Servises;
+using Microsoft.AspNetCore.Mvc;
 using WebShobGleb.Areas.Admin.Models;
 using WebShobGleb.Mappers;
-using WebShobGleb.Servises;
 
 namespace WebShobGleb.Areas.Admin.Controllers
 {
@@ -19,7 +18,7 @@ namespace WebShobGleb.Areas.Admin.Controllers
         public IActionResult Roles()
         {
             var roles = _roleService.GetAllRoles();
-            return View(roles);
+            return View(RoleMapper.MapToRoleVMList(roles));
         }
 
         public IActionResult RemoveRole(Guid roleId)
@@ -43,7 +42,7 @@ namespace WebShobGleb.Areas.Admin.Controllers
 
             try
             {
-                _roleService.AddRole(role);
+                _roleService.AddRole(RoleMapper.MapToRoleDTO(role));
                 return RedirectToAction("Roles");
             }
             catch (InvalidOperationException ex)

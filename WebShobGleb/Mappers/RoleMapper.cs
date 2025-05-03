@@ -1,51 +1,52 @@
-﻿using Core.Entity;
+﻿using Application.DTOs;
 using WebShobGleb.Areas.Admin.Models;
 
 namespace WebShobGleb.Mappers
 {
-    public class RoleMapper
+    public static class RoleMapper
     {
-        public static RoleVM MapToRoleVM(Role role)
+        // RoleDTO -> RoleVM
+        public static RoleVM MapToRoleVM(RoleDTO roleDTO)
         {
-            if (role == null)
+            if (roleDTO == null)
                 return null;
 
             return new RoleVM
             {
-                Id = role.Id,
-                Name = role.Name
+                Id = roleDTO.Id,
+                Name = roleDTO.Name
             };
         }
 
-        // Маппинг из RoleVM в Role
-        public static Role MapToRole(RoleVM roleVM)
+        // RoleVM -> RoleDTO
+        public static RoleDTO MapToRoleDTO(RoleVM roleVM)
         {
             if (roleVM == null)
                 return null;
 
-            return new Role
+            return new RoleDTO
             {
                 Id = roleVM.Id,
                 Name = roleVM.Name
             };
         }
 
-        // Маппинг списка Role в список RoleVM
-        public static List<RoleVM> MapToRoleVMList(List<Role> roles)
+        // List<RoleDTO> -> List<RoleVM>
+        public static List<RoleVM> MapToRoleVMList(List<RoleDTO> roleDTOs)
         {
-            if (roles == null)
-                return null;
+            if (roleDTOs == null)
+                return new List<RoleVM>();
 
-            return roles.Select(role => MapToRoleVM(role)).ToList();
+            return roleDTOs.Select(MapToRoleVM).ToList();
         }
 
-        // Маппинг списка RoleVM в список Role
-        public static List<Role> MapToRoleList(List<RoleVM> roleVMs)
+        // List<RoleVM> -> List<RoleDTO>
+        public static List<RoleDTO> MapToRoleDTOList(List<RoleVM> roleVMs)
         {
             if (roleVMs == null)
-                return null;
+                return new List<RoleDTO>();
 
-            return roleVMs.Select(roleVM => MapToRole(roleVM)).ToList();
+            return roleVMs.Select(MapToRoleDTO).ToList();
         }
     }
 }
