@@ -1,4 +1,5 @@
-﻿using Core.Entity;
+﻿using Application.Servises;
+using Core.Entity;
 using Core.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace WebShobGleb.Views.Shared.Components.Cart
         public IViewComponentResult Invoke()
         {
             var userId = _userManager.GetUserId((System.Security.Claims.ClaimsPrincipal)User);
-            var cart = _cartService.GetCart(userId);
+            var cart = _cartService.GetCart(userId, userId); //доделать норм
             var productCounts = cart?.Amount;
             return View("Cart", productCounts);
         }

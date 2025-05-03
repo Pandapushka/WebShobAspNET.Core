@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "WebShobGleb\Web.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "OnlineShopDB\Core.csproj", "{35EA2044-B3BC-497C-9BC5-30F62F43E28D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{26AA19D9-48B5-4A0F-A9B4-00141F07BC07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{35EA2044-B3BC-497C-9BC5-30F62F43E28D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35EA2044-B3BC-497C-9BC5-30F62F43E28D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35EA2044-B3BC-497C-9BC5-30F62F43E28D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26AA19D9-48B5-4A0F-A9B4-00141F07BC07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26AA19D9-48B5-4A0F-A9B4-00141F07BC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26AA19D9-48B5-4A0F-A9B4-00141F07BC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26AA19D9-48B5-4A0F-A9B4-00141F07BC07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

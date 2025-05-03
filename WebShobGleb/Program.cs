@@ -5,6 +5,7 @@ using WebShobGleb.Repository;
 using WebShobGleb.Servises;
 using Core;
 using Core.Repository;
+using Application.Servises;
 
 var builder = WebApplication.CreateBuilder(args);
 

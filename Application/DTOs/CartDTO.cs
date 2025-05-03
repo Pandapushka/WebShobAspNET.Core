@@ -1,12 +1,16 @@
-﻿using WebShobGleb.Const;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebShobGleb.Models
+namespace Application.DTOs
 {
-    public class CartVM
+    public class CartDTO
     {
         public Guid Id { get; set; }
         public string UserId { get; set; }
-        public List<CartItemVM> Items { get; set; }
+        public List<CartItemDTO> Items { get; set; }
 
         public int Amount
         {
@@ -23,10 +27,9 @@ namespace WebShobGleb.Models
                 return Items.Sum(x => x.Cost);
             }
         }
-        public CartVM()
+        public CartDTO()
         {
             Id = Guid.NewGuid();
-            UserId = Constants.UserId;
         }
     }
 }

@@ -1,10 +1,11 @@
-﻿using Core.Entity;
+﻿using Application.DTOs;
+using Application.Mappers;
+using Core.Entity;
 using Core.Repository;
-using WebShobGleb.Mappers;
-using WebShobGleb.Models;
+using Microsoft.AspNetCore.Http;
 
 
-namespace WebShobGleb.Servises
+namespace Application.Servises
 {
     public class CartService : ICartService
     {
@@ -22,14 +23,14 @@ namespace WebShobGleb.Servises
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public CartVM GetCart(string userId)
+        public CartDTO GetCart(string userId, string tempUser)
         {
-            var tempUserId = userId ?? GetTempUserId();
+            var tempUserId = userId ?? tempUser;
             var cart = _cartRepository.TryGetByUserId(tempUserId);
-            return CartMapper.MappingToCartVM(cart);
+            return CartDTOMapper.MappingToCartDTO(cart);
         }
 
-        public void AddProductToCart(Guid productId, string userId)
+        public void AddProductToCart(Guid productId, string userId, string tempUser)
         {
             var product = _productsRepository.GetById(productId);
             if (product == null)
@@ -37,7 +38,7 @@ namespace WebShobGleb.Servises
                 throw new InvalidOperationException("Товар не найден.");
             }
 
-            var tempUserId = userId ?? GetTempUserId();
+            var tempUserId = userId ?? tempUser;
             var existingCart = _cartRepository.TryGetByUserId(tempUserId);
             var newCartItem = new CartItem
             {
@@ -69,9 +70,9 @@ namespace WebShobGleb.Servises
             }
         }
 
-        public void RemoveProductFromCart(Guid productId, string userId)
+        public void RemoveProductFromCart(Guid productId, string userId, string tempUser)
         {
-            var tempUserId = userId ?? GetTempUserId();
+            var tempUserId = userId ?? tempUser;
             var existingCart = _cartRepository.TryGetByUserId(tempUserId);
             if (existingCart == null)
             {
@@ -101,9 +102,9 @@ namespace WebShobGleb.Servises
             }
         }
 
-        public void ClearCart(string userId)
+        public void ClearCart(string userId, string tempUser)
         {
-            var tempUserId = userId ?? GetTempUserId();
+            var tempUserId = userId ?? tempUser;
             var cart = _cartRepository.TryGetByUserId(tempUserId);
             if (cart != null)
             {
@@ -111,24 +112,7 @@ namespace WebShobGleb.Servises
             }
         }
 
-        // Получение временного идентификатора пользователя из сессии
-        private string GetTempUserId()
-        {
-            var httpContext = _httpContextAccessor.HttpContext;
-            if (httpContext == null)
-            {
-                throw new InvalidOperationException("HTTP-контекст недоступен.");
-            }
-
-            var tempUserId = httpContext.Session.GetString("TempUserId");
-            if (string.IsNullOrEmpty(tempUserId))
-            {
-                tempUserId = Guid.NewGuid().ToString();
-                httpContext.Session.SetString("TempUserId", tempUserId);
-            }
-
-            return tempUserId;
-        }
+       
 
         // Перенос корзины из временной в постоянную (при аутентификации)
         public void MergeCarts(string tempUserId, string userId)

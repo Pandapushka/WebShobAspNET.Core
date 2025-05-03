@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Core.Entity;
 using WebShobGleb.Areas.Admin.Models;
-using System.Threading.Tasks;
-using WebShobGleb.Servises;
+using Application.Servises;
 
 namespace WebShobGleb.Controllers
 {

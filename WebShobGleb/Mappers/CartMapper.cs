@@ -1,64 +1,75 @@
-﻿using Core.Entity;
+﻿using Application.DTOs;
+using Core.Entity;
 using WebShobGleb.Models;
 
 namespace WebShobGleb.Mappers
 {
-    public class CartMapper
+    public static class CartMapper
     {
-        public static Cart ToCart(CartVM cartVM)
+        // ====== CartVM -> CartDTO ======
+        public static CartDTO MapToCartDTO(CartVM cartVM)
         {
-            if (cartVM == null)
-                return null;
-            var cart = new Cart()
+            if (cartVM == null) return null;
+
+            return new CartDTO
             {
                 Id = cartVM.Id,
                 UserId = cartVM.UserId,
-                Items = ToCartItem(cartVM.Items)
+                Items = MapToCartItemDTOs(cartVM.Items)
             };
-            return cart;
         }
-        public static List<CartItem> ToCartItem(List<CartItemVM> cartDbItems)
-        {
-            var cartItems = new List<CartItem>();
-            foreach (var cartDbItem in cartDbItems)
-            {
-                var cartItem = new CartItem()
-                {
-                    Id = cartDbItem.Id,
-                    Amount = cartDbItem.Amount,
-                    Product = cartDbItem.Product,
-                };
-                cartItems.Add(cartItem);
-            }
-            return cartItems;
 
-        }
-        public static CartVM MappingToCartVM(Cart cart)
+        // ====== CartDTO -> CartVM ======
+        public static CartVM MapToCartVM(CartDTO cartDTO)
         {
-            if (cart == null)
-                return null;
-            var cartVM = new CartVM()
+            if (cartDTO == null) return null;
+
+            return new CartVM
             {
-                Id = cart.Id,
-                UserId = cart.UserId,
-                Items = ToCartItemViewModel(cart.Items)
+                Id = cartDTO.Id,
+                UserId = cartDTO.UserId,
+                Items = MapToCartItemVMs(cartDTO.Items)
             };
-            return cartVM;
         }
-        public static List<CartItemVM> ToCartItemViewModel(List<CartItem> cartDbItems)
+
+        // ====== List<CartItemVM> -> List<CartItemDTO> ======
+        public static List<CartItemDTO> MapToCartItemDTOs(List<CartItemVM> cartItemVMs)
         {
-            var cartItems = new List<CartItemVM>();
-            foreach (var cartDbItem in cartDbItems)
+            if (cartItemVMs == null) return new List<CartItemDTO>();
+
+            return cartItemVMs.Select(MapToCartItemDTO).ToList();
+        }
+
+        public static CartItemDTO MapToCartItemDTO(CartItemVM itemVM)
+        {
+            if (itemVM == null) return null;
+
+            return new CartItemDTO
             {
-                var cartItem = new CartItemVM()
-                {
-                    Id = cartDbItem.Id,
-                    Amount = cartDbItem.Amount,
-                    Product = cartDbItem.Product,
-                };
-                cartItems.Add(cartItem);
-            }
-            return cartItems;
+                Id = itemVM.Id,
+                Product = itemVM.Product,
+                Amount = itemVM.Amount
+            };
+        }
+
+        // ====== List<CartItemDTO> -> List<CartItemVM> ======
+        public static List<CartItemVM> MapToCartItemVMs(List<CartItemDTO> cartItemDTOs)
+        {
+            if (cartItemDTOs == null) return new List<CartItemVM>();
+
+            return cartItemDTOs.Select(MapToCartItemVM).ToList();
+        }
+
+        public static CartItemVM MapToCartItemVM(CartItemDTO itemDTO)
+        {
+            if (itemDTO == null) return null;
+
+            return new CartItemVM
+            {
+                Id = itemDTO.Id,
+                Product = itemDTO.Product,
+                Amount = itemDTO.Amount
+            };
         }
     }
 }
