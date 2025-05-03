@@ -1,10 +1,9 @@
-﻿using Core.Entity.Enums;
+﻿using Application.DTOs;
+using Core.Entity.Enums;
 using Core.Repository;
 using WebShobGleb.Mappers;
-using WebShobGleb.Models;
-using WebShobGleb.Repository;
 
-namespace WebShobGleb.Servises
+namespace Application.Servises
 {
     public class OrderService : IOrderService
     {
@@ -16,26 +15,26 @@ namespace WebShobGleb.Servises
             _cartsRepository = cartsRepository;
             _ordersRepository = ordersRepository;
         }
-        public OrderVM TryGetById(Guid orderId)
+        public OrderDTO TryGetById(Guid orderId)
         { 
             var order = _ordersRepository.TryGetById(orderId);
-            return OrderMapper.MapOrderToOrderVM(order);
+            return OrderMapperDTO.MapOrderToOrderVM(order);
         }
 
-        public List<OrderVM> GetAll()
+        public List<OrderDTO> GetAll()
         {
-            return OrderMapper.MapOrdersToOrderVMs(_ordersRepository.GetAll());
+            return OrderMapperDTO.MapOrdersToOrderVMs(_ordersRepository.GetAll());
         }
 
-        public OrderVM GetOrderVMForUser(string userId)
+        public OrderDTO GetOrderVMForUser(string userId)
         {
-            return OrderMapper.MapCartToOrderVM(_cartsRepository.TryGetByUserId(userId));
+            return OrderMapperDTO.MapCartToOrderVM(_cartsRepository.TryGetByUserId(userId));
         }
 
-        public OrderVM RebuildOrderVM(OrderVM orderVM, string userId)
+        public OrderDTO RebuildOrderVM(OrderDTO orderVM, string userId)
         {
             var cart = _cartsRepository.TryGetByUserId(userId);
-            orderVM.Items = cart.Items.Select(item => new OrderItemVM
+            orderVM.Items = cart.Items.Select(item => new OrderItemDTO
             {
                 Id = item.Id,
                 Product = item.Product,
@@ -44,10 +43,10 @@ namespace WebShobGleb.Servises
             return orderVM;
         }
 
-        public void CreateOrder(OrderVM orderVM, string userId)
+        public void CreateOrder(OrderDTO orderVM, string userId)
         {
             orderVM = RebuildOrderVM(orderVM, userId);
-            var order = OrderMapper.OrderForDb(orderVM, _cartsRepository.TryGetByUserId(userId));
+            var order = OrderMapperDTO.OrderForDb(orderVM, _cartsRepository.TryGetByUserId(userId));
             _ordersRepository.Add(order);
             var cart = _cartsRepository.TryGetByUserId(userId);
             _cartsRepository.Remove(cart);

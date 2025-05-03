@@ -1,6 +1,6 @@
 ﻿using Core.Entity;
 using Microsoft.AspNetCore.Identity;
-using OnlineShopDB.Constans;
+using Core.Constans;
 
 namespace Core
 {

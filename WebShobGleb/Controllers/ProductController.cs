@@ -1,6 +1,6 @@
 ﻿using Application.Servises;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Repository;
+using Core.Repository;
 using Web.Mappers;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;

@@ -1,16 +1,36 @@
 ﻿using Core.Entity;
 using Core.Entity.Enums;
 using WebShobGleb.Models;
+using Application.DTOs;
 
 namespace WebShobGleb.Mappers
 {
-    public class OrderMapper
+    public static class OrderMapper
     {
+        // ====== Cart -> OrderVM ======
         public static OrderVM MapCartToOrderVM(Cart cart)
         {
-            var orderVM = new OrderVM();
+            if (cart == null) return new OrderVM();
+
+            return new OrderVM
+            {
+                UserId = cart.UserId,
+                Items = cart.Items?.Select(item => new OrderItemVM
+                {
+                    Id = item.Id,
+                    Product = item.Product,
+                    Amount = item.Amount
+                }).ToList() ?? new List<OrderItemVM>()
+            };
+        }
+
+        // ====== Cart + OrderVM -> OrderVM ======
+        public static OrderVM ToOrderVM(Cart cart, OrderVM orderVM)
+        {
+            if (cart == null || orderVM == null) return orderVM;
+
             orderVM.UserId = cart.UserId;
-            orderVM.Items = cart?.Items.Select(item => new OrderItemVM
+            orderVM.Items = cart.Items?.Select(item => new OrderItemVM
             {
                 Id = item.Id,
                 Product = item.Product,
@@ -19,73 +39,87 @@ namespace WebShobGleb.Mappers
 
             return orderVM;
         }
-        public static OrderVM ToOrderVM(Cart cart, OrderVM orderVM)
+
+        // ====== OrderVM + Cart -> OrderDTO ======
+        public static OrderDTO OrderForDTO(OrderVM orderVM, Cart cart)
         {
-            if (cart == null)
-            {
-                return orderVM;
-            }
-
-            orderVM.UserId = cart.UserId;
-            orderVM.Items = cart.Items.Select(item => new OrderItemVM
-            {
-                Id = item.Id,
-                Product = item.Product,
-                Amount = item.Amount
-            }).ToList();
-
-            return orderVM;
-        }
-
-        public static Order OrderForDb(OrderVM orderVM, Cart cart)
-        {
-            var order = new Order
+            var orderDTO = new OrderDTO
             {
                 Id = orderVM.Id,
                 Name = orderVM.Name,
                 Email = orderVM.Email,
                 Phone = orderVM.Phone,
                 Address = orderVM.Address,
+                CartVMId = orderVM.CartVMId,
+                UserId = orderVM.UserId,
                 Status = OrderStatus.Created,
-                CreateDateTime = DateTime.Now,
-                Cost = orderVM.Cost
-            };
-
-            order.OrderItems = cart.Items.Select(item => new OrderItem
-            {
-                Id = Guid.NewGuid(),
-                Product = item.Product,
-                Amount = item.Amount,
-                Order = order
-            }).ToList();
-
-            return order;
-        }
-
-        public static OrderVM MapOrderToOrderVM(Order order)
-        {
-            return new OrderVM
-            {
-                Id = order.Id,
-                Name = order.Name,
-                Email = order.Email,
-                Phone = order.Phone,
-                Address = order.Address,
-                Status = order.Status,
-                CreateDataTime = order.CreateDateTime,
-                Items = order.OrderItems.Select(item => new OrderItemVM
+                CreateDataTime = DateTime.Now,
+                Items = cart.Items?.Select(item => new OrderItemDTO
                 {
                     Id = item.Id,
                     Product = item.Product,
-                    Amount = item.Amount,
+                    Amount = item.Amount
+                }).ToList() ?? new List<OrderItemDTO>()
+            };
 
-                }).ToList()
+            return orderDTO;
+        }
+
+        // ====== OrderDTO -> OrderVM ======
+        public static OrderVM MapToOrderVM(OrderDTO orderDTO)
+        {
+            if (orderDTO == null) return new OrderVM();
+
+            return new OrderVM
+            {
+                Id = orderDTO.Id,
+                Name = orderDTO.Name,
+                Email = orderDTO.Email,
+                Phone = orderDTO.Phone,
+                Address = orderDTO.Address,
+                CartVMId = orderDTO.CartVMId,
+                UserId = orderDTO.UserId,
+                Status = orderDTO.Status,
+                CreateDataTime = orderDTO.CreateDataTime,
+                Items = orderDTO.Items?.Select(item => new OrderItemVM
+                {
+                    Id = item.Id,
+                    Product = item.Product,
+                    Amount = item.Amount
+                }).ToList() ?? new List<OrderItemVM>()
             };
         }
 
-        public static List<OrderVM> MapOrdersToOrderVMs(List<Order> orders)
+        // ====== OrderVM -> OrderDTO ======
+        public static OrderDTO MapToOrderDTO(OrderVM orderVM)
         {
-            return orders.Select(MapOrderToOrderVM).ToList();
+            if (orderVM == null) return new OrderDTO();
+
+            return new OrderDTO
+            {
+                Id = orderVM.Id,
+                Name = orderVM.Name,
+                Email = orderVM.Email,
+                Phone = orderVM.Phone,
+                Address = orderVM.Address,
+                CartVMId = orderVM.CartVMId,
+                UserId = orderVM.UserId,
+                Status = orderVM.Status,
+                CreateDataTime = orderVM.CreateDataTime,
+                Items = orderVM.Items?.Select(item => new OrderItemDTO
+                {
+                    Id = item.Id,
+                    Product = item.Product,
+                    Amount = item.Amount
+                }).ToList() ?? new List<OrderItemDTO>()
+            };
+        }
+
+        public static List<OrderVM> MapToOrderVMList(List<OrderDTO> orderDTOs)
+        {
+            if (orderDTOs == null) return new List<OrderVM>();
+
+            return orderDTOs.Select(MapToOrderVM).ToList();
         }
     }
 }

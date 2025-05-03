@@ -1,6 +1,5 @@
 ﻿
-
-namespace OnlineShopDB.Constans
+namespace Core.Constans
 {
     public class Constant
     {

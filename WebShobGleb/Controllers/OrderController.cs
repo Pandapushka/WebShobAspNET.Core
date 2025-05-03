@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Core.Entity;
-using WebShobGleb.Const;
-using WebShobGleb.Models;
-using WebShobGleb.Servises;
+using Application.Servises;
+using WebShobGleb.Mappers;
 
 namespace WebShobGleb.Controllers
 {
@@ -24,7 +23,7 @@ namespace WebShobGleb.Controllers
         {
             // Получаем модель заказа для текущего пользователя
             var userId = _userManager.GetUserId(User);
-            var orderVM = _orderService.GetOrderVMForUser(userId);
+            var orderVM = OrderMapper.MapToOrderVM(_orderService.GetOrderVMForUser(userId));
             return View(orderVM);
         }
 
@@ -35,12 +34,12 @@ namespace WebShobGleb.Controllers
             if (!ModelState.IsValid)
             {
                 // Если модель недействительна, обновляем список товаров в модели
-                orderVM = _orderService.RebuildOrderVM(orderVM, userId);
+                orderVM = OrderMapper.MapToOrderVM(_orderService.RebuildOrderVM(OrderMapper.MapToOrderDTO(orderVM), userId));
                 return View("Index", orderVM);
             }
 
             // Если модель действительна, создаем заказ
-            _orderService.CreateOrder(orderVM, userId);
+            _orderService.CreateOrder(OrderMapper.MapToOrderDTO(orderVM), userId);
             return View("Success", orderVM);
         }
     }

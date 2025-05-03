@@ -14,6 +14,7 @@ namespace Core
         public DbSet<UserLikeProducts> UserLikeProducts { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Сategory> Сategorys { get; set; }
 
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
@@ -34,27 +35,28 @@ namespace Core
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.Cost)
-                .HasColumnType("decimal(18, 2)"); // Указываем точность (18) и масштаб (2)
+                .HasColumnType("decimal(18, 2)"); 
 
             modelBuilder.Entity<Image>().HasOne(p => p.Product).WithMany(i => i.Images).HasForeignKey(p => p.ProductId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(o => o.Cost)
-                      .HasColumnType("decimal(18, 4)") // Указываем тип данных
-                      .HasPrecision(18, 4);          // Указываем точность и масштаб
+                      .HasColumnType("decimal(18, 4)") 
+                      .HasPrecision(18, 4);          
             });
 
-            // Настройка связи между Product и Image
             modelBuilder.Entity<Product>()
                 .HasMany(p => p.Images)
                 .WithOne(i => i.Product)
                 .HasForeignKey(i => i.ProductId);
 
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(o => o.Cart)
-            //    .WithMany()
-            //    .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<Product>()
+            .HasOne(p => p.Category)
+            .WithMany(c => c.Products)
+            .HasForeignKey(p => p.CategoryId); 
+
+
         }
     }
 }

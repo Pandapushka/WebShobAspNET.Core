@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnlineShopDB.Repository.BaseRepository;
+﻿using Core.Repository.BaseRepository;
+using Microsoft.EntityFrameworkCore;
+
 
 
 namespace Core.Repository

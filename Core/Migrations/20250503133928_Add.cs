@@ -12,6 +12,19 @@ namespace Core.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Сategorys",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Сategorys", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
@@ -73,6 +86,8 @@ namespace Core.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserLikeProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -83,6 +98,12 @@ namespace Core.Migrations
                         column: x => x.UserLikeProductsId,
                         principalTable: "UserLikeProducts",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Products_Сategorys_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Сategorys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,6 +205,11 @@ namespace Core.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_UserLikeProductsId",
                 table: "Products",
                 column: "UserLikeProductsId");
@@ -215,6 +241,9 @@ namespace Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserLikeProducts");
+
+            migrationBuilder.DropTable(
+                name: "Сategorys");
         }
     }
 }

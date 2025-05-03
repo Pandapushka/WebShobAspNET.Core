@@ -1,6 +1,6 @@
 ﻿using Core.Entity;
 using Core.Entity.Enums;
-using OnlineShopDB.Repository.BaseRepository;
+using Core.Repository.BaseRepository;
 
 namespace Core.Repository
 {

@@ -56,6 +56,7 @@ builder.Services.AddTransient<IProductsRepository, ProductRepository>();
 builder.Services.AddTransient<ILikeRepository, LikeRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IRolesRepository, RolesRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IUserManager, UserManager>();
 
 // Регистрация сервисов

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Repository;
+using Core.Repository;
 using WebShobGleb.Const;
 using WebShobGleb.Mappers;
 using WebShobGleb.Servises;

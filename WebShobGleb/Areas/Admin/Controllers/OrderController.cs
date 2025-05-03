@@ -1,10 +1,12 @@
 ﻿using Core.Entity.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineShopDB.Constans;
+using Core.Constans;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
 using WebShobGleb.Servises;
+using Application.Servises;
+using WebShobGleb.Mappers;
 
 namespace WebShobGleb.Areas.Admin.Controllers
 {
@@ -19,12 +21,12 @@ namespace WebShobGleb.Areas.Admin.Controllers
         }
         public IActionResult Orders()
         {           
-            var ordersVM = _orderService.GetAll();
+            var ordersVM = OrderMapper.MapToOrderVMList(_orderService.GetAll());
             return View(ordersVM);
         }
         public IActionResult OrderDetails(Guid orderId)
         {
-            var order = _orderService.TryGetById(orderId);
+            var order = OrderMapper.MapToOrderVM(_orderService.TryGetById(orderId));
             return View(order);
         }
         public IActionResult UpdateOrderStatus(Guid orderId, OrderStatus orderStatus)

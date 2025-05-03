@@ -1,5 +1,5 @@
 ﻿using Core.Entity;
-using OnlineShopDB.Repository.BaseRepository;
+using Core.Repository.BaseRepository;
 
 namespace Core.Repository
 {
