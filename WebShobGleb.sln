@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "WebShobGleb\Web.csproj", "{70B019AB-D59D-4ECD-9234-6CD7D6FDA7FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "OnlineShopDB\Core.csproj", "{35EA2044-B3BC-497C-9BC5-30F62F43E28D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{35EA2044-B3BC-497C-9BC5-30F62F43E28D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{26AA19D9-48B5-4A0F-A9B4-00141F07BC07}"
 EndProject
