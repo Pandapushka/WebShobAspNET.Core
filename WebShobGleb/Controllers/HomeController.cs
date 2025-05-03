@@ -1,23 +1,24 @@
 using System.Diagnostics;
+using Application.Servises;
 using Core.Repository;
 using Microsoft.AspNetCore.Mvc;
-using WebShobGleb.Mappers;
+using Web.Mappers;
 using WebShobGleb.Models;
 
 namespace WebShobGleb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IProductsRepository _productsRepository;
+        private readonly IProductService _productService;
 
-        public HomeController(IProductsRepository productsRepository)
+        public HomeController(IProductService productService)
         {
-            _productsRepository = productsRepository;
+            _productService = productService;
         }
 
         public IActionResult Index()
         {
-            var products = _productsRepository.GetAll();
+            var products = _productService.GetAllProducts();
             var productsVM = ProductMapper.MapToProductVMList(products);
             return View(productsVM);
         }

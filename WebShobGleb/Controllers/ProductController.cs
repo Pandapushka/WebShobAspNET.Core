@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Servises;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopDB.Repository;
+using Web.Mappers;
 using WebShobGleb.Mappers;
 using WebShobGleb.Models;
 using WebShobGleb.Repository;
@@ -18,7 +20,7 @@ namespace WebShobGleb.Controllers
         public IActionResult Index(Guid id)
         {
             var productVM = _productService.GetProductById(id);
-            return View(productVM);
+            return View(ProductMapper.MapToProductVM(productVM));
         } 
     }
 }

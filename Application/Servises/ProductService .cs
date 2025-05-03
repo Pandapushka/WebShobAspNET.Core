@@ -1,8 +1,8 @@
-﻿using Core.Repository;
-using WebShobGleb.Mappers;
-using WebShobGleb.Models;
+﻿using Application.DTOs;
+using Application.Mappers;
+using Core.Repository;
 
-namespace WebShobGleb.Servises
+namespace Application.Servises
 {
     public class ProductService : IProductService
     {
@@ -13,27 +13,27 @@ namespace WebShobGleb.Servises
             _productsRepository = productsRepository;
         }
 
-        public List<ProductVM> GetAllProducts()
+        public List<ProductDTO> GetAllProducts()
         {
             var products = _productsRepository.GetAll();
-            return ProductMapper.MapToProductVMList(products);
+            return ProductMapperDTO.MapToProductVMList(products);
         }
 
-        public ProductVM GetProductById(Guid id)
+        public ProductDTO GetProductById(Guid id)
         {
             var product = _productsRepository.GetById(id);
-            return ProductMapper.MapToProductVM(product);
+            return ProductMapperDTO.MapToProductDTO(product);
         }
 
-        public void AddProduct(ProductVM productVM)
+        public void AddProduct(ProductDTO productVM)
         {
-            var product = ProductMapper.MapToProduct(productVM);
+            var product = ProductMapperDTO.MapToProduct(productVM);
             _productsRepository.Add(product);
         }
 
-        public void UpdateProduct(ProductVM productVM, Guid id)
+        public void UpdateProduct(ProductDTO productVM, Guid id)
         {
-            var product = ProductMapper.MapToProduct(productVM);
+            var product = ProductMapperDTO.MapToProduct(productVM);
             _productsRepository.Edit(product, id);
         }
 

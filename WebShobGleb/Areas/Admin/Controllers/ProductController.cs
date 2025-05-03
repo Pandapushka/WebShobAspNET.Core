@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Core.Entity;
-using OnlineShopDB.Repository;
-using WebShobGleb.Mappers;
+﻿using Application.Servises;
+using Microsoft.AspNetCore.Mvc;
+using Web.Mappers;
 using WebShobGleb.Models;
-using WebShobGleb.Repository;
-using WebShobGleb.Servises;
 
 namespace WebShobGleb.Areas.Admin.Controllers
 {
@@ -21,7 +18,7 @@ namespace WebShobGleb.Areas.Admin.Controllers
         public IActionResult Products()
         {
             var productsVM = _productService.GetAllProducts();
-            return View(productsVM);
+            return View(ProductMapper.MapToProductVMList(productsVM));
         }
 
         public IActionResult Delete(Guid id)
@@ -33,7 +30,7 @@ namespace WebShobGleb.Areas.Admin.Controllers
         public IActionResult Edit(Guid id)
         {
             var productVM = _productService.GetProductById(id);
-            return View(productVM);
+            return View(ProductMapper.MapToProductVM(productVM));
         }
 
         [HttpPost]
@@ -45,7 +42,7 @@ namespace WebShobGleb.Areas.Admin.Controllers
             //    return View(productVM);
             //}
 
-            _productService.UpdateProduct(productEdit, id);
+            _productService.UpdateProduct(ProductMapper.MapToProductDTO(productEdit), id);
             return RedirectToAction("Products", "Product");
         }
 
@@ -62,7 +59,7 @@ namespace WebShobGleb.Areas.Admin.Controllers
             //    return View(newProduct);
             //}
 
-            _productService.AddProduct(newProduct);
+            _productService.AddProduct(ProductMapper.MapToProductDTO(newProduct));
             return RedirectToAction("Products", "Product");
         }
     }
