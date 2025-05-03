@@ -1,8 +1,8 @@
 ﻿using Core.Entity;
 
-namespace Application.DTOs
+namespace Web.ViewModels
 {
-    public class CategoryDTO
+    public class CategoryVM
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

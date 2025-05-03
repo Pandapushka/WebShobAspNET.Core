@@ -1,10 +1,9 @@
-﻿
-using Application.DTOs;
+﻿using Application.DTOs;
 using Core.Entity;
 
-namespace Application.Mappers
+namespace Web.Mappers
 {
-    public static class CategoryMapperDTO
+    public class CategoryMapper
     {
         public static Сategory ToCategory(CategoryDTO dTO)
         {
@@ -38,7 +37,6 @@ namespace Application.Mappers
             };
         }
 
-        
         public static List<Сategory> ToCategoryList(List<CategoryDTO> dtoList)
         {
             if (dtoList == null)
@@ -47,7 +45,6 @@ namespace Application.Mappers
             return dtoList.Select(ToCategory).ToList();
         }
 
-        
         public static List<CategoryDTO> ToCategoryDTOList(List<Сategory> categoryList)
         {
             if (categoryList == null)
