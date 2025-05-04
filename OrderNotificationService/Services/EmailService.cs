@@ -1,12 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using OrderNotificationService.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderNotificationService.Services
 {
@@ -14,9 +10,9 @@ namespace OrderNotificationService.Services
     {
         private readonly EmailSettings _settings;
 
-        public EmailService(EmailSettings settings)
+        public EmailService(IOptions<EmailSettings> options)
         {
-            _settings = settings;
+            _settings = options.Value;
         }
 
         public async Task SendOrderConfirmationEmailAsync(OrderCreatedEvent @event)
