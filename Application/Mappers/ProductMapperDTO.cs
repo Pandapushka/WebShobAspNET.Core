@@ -7,9 +7,11 @@ namespace Application.Mappers
     {
         public static Product MapToProduct(ProductDTO productDTO)
         {
+            Guid categoryId = Guid.Parse("6e0a7d5e-4d8c-4f3a-9b2c-1e8e5f6a7b8c");
             var product = new Product(productDTO.Name, productDTO.Cost, productDTO.Description)
             {
-                Id = productDTO.Id
+                Id = productDTO.Id,
+                CategoryId = categoryId
             };
 
             if (productDTO.ImageFile != null)

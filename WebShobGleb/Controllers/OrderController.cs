@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Core.Entity;
 using Application.Servises;
 using WebShobGleb.Mappers;
+using Application.Servises.OrderNotificationService;
+using Application.DTOs.OrderNotificationService;
 
 namespace WebShobGleb.Controllers
 {
@@ -12,11 +14,13 @@ namespace WebShobGleb.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly UserManager<User> _userManager;
+        private readonly IRabbitMQProducer _rabbitMQProducer;
 
-        public OrderController(IOrderService orderService, UserManager<User> userManager)
+        public OrderController(IOrderService orderService, UserManager<User> userManager, IRabbitMQProducer rabbitMQProducer)
         {
             _orderService = orderService;
             _userManager = userManager;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         public IActionResult Index()
@@ -40,6 +44,18 @@ namespace WebShobGleb.Controllers
 
             // Если модель действительна, создаем заказ
             _orderService.CreateOrder(OrderMapper.MapToOrderDTO(orderVM), userId);
+
+            // Отправляем событие в очередь
+            var @event = new OrderCreatedEvent
+            {
+                Email = orderVM.Email,
+                Name = orderVM.Name,
+                TotalAmount = orderVM.Cost,
+                CreateDate = DateTime.Now
+            };
+
+            _rabbitMQProducer.SendOrderCreatedMessageAsync(@event);
+
             return View("Success", orderVM);
         }
     }

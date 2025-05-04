@@ -6,6 +6,8 @@ using WebShobGleb.Servises;
 using Core;
 using Core.Repository;
 using Application.Servises;
+using Application.DTOs.OrderNotificationService;
+using Application.Servises.OrderNotificationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
 
 builder.Services.AddDbContext<IdentityContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("online_shop")));
+
+builder.Services.Configure<RabbitMQSettings>(builder.Configuration.GetSection("RabbitMQ"));
+
 
 // Настройка Identity (вызывается только один раз)
 builder.Services.AddIdentity<User, IdentityRole>()
@@ -66,6 +71,7 @@ builder.Services.AddTransient<ILikeService, LikeService>();
 builder.Services.AddTransient<ICartService, CartService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddSingleton<IRabbitMQProducer, RabbitMQProducer>();
 
 var app = builder.Build();
 
